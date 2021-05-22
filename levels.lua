@@ -7,12 +7,14 @@ possiblePowers = {}
 local PowerNames = {
 "power1",
 "power2",
+"power3",
 }
 possibleMain = {}
 local MainNames = {
 "main1",
 "main2",
 "main3",
+"main4",
 }
 possibleEnd = {}
 local EndNames = {
@@ -34,8 +36,8 @@ function addObjects(levelScript,sectn,yoff,xoff)
 			spawned.width = currBlock[4]
 			spawned.height = currBlock[5]
 			spawned.contentID = currBlock[6]
-			spawned.isHidden = currBlock[7]
-			spawned.invisible = currBlock[8]
+			--spawned.isHidden = currBlock[8]
+			spawned:mem(0x5A,FIELD_BOOL,currBlock[8])
 			spawned.slippery = currBlock[9]
 	end
 	for b=1,tablelength(levelScript.npc) do
@@ -48,10 +50,12 @@ function addObjects(levelScript,sectn,yoff,xoff)
 				bgoCounter = 1
 			end
 			local currBlock = levelScript.bgo[b]
-			local spawned = BGO.get()[bgoCounter]:transform(currBlock[1])
-			BGO.get()[bgoCounter].x = currBlock[2]+offSet
-			BGO.get()[bgoCounter].y = currBlock[3]+yoff
-			bgoCounter = bgoCounter+1
+			if currBlock[1] ~= 161 then
+				local spawned = BGO.get()[bgoCounter]:transform(currBlock[1])
+				BGO.get()[bgoCounter].x = currBlock[2]+offSet
+				BGO.get()[bgoCounter].y = currBlock[3]+yoff
+				bgoCounter = bgoCounter+1
+			end
 	end
 	return bounds
 end
@@ -77,7 +81,7 @@ function levels.generate()
 			end
 			sec.boundary = addObjects(levelScript,sec,0,0)
 		end
-		for n=1,RNG.randomInt(2,4) do
+		for n=1,RNG.randomInt(3,4) do
 			for a=1,1 do
 				local chose = RNG.randomInt(1,tablelength(possiblePowers))
 				if tablelength(possiblePowers) > 0 then
@@ -86,7 +90,7 @@ function levels.generate()
 					sec.boundary = addObjects(levelScript,sec,0,0)
 				end
 			end
-			for a=1,RNG.randomInt(2,4) do
+			for a=1,RNG.randomInt(1,2) do
 				local chose = RNG.randomInt(1,tablelength(possibleMain))
 				if tablelength(possibleMain) > 0 then
 					local levelScript = possibleMain[chose]

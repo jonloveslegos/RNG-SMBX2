@@ -21,6 +21,7 @@ local flagpoleNPCSettings = {
 	id = npcID,
 	frames = 3,
 	framestyle = 0,
+	framespeed = 8,
 	nogravity = true,
 	noblockcollision = true,
 	nohurt = true,
@@ -32,6 +33,7 @@ npcManager.setNpcSettings(flagpoleNPCSettings)
 
 function flagpoleNPC.onInitAPI()
 	npcManager.registerEvent(npcID, flagpoleNPC, "onTickEndNPC")
+	--npcManager.registerEvent(npcID, flagpoleNPC, "onDrawNPC")
 end
 
 local function stop_player(v)
@@ -80,8 +82,12 @@ local function score(p_id, v)
 	local p = Player(p_id)
 	local c = v.data.collider
 	local distance = math.abs(p.y - (c.y + c.height))
-
-	Misc.givePoints(math.floor(distance / 32), vector(p.x, p.y), false)
+	local ponts = math.floor(distance / 32)
+	if ponts <= 1 then ponts = 2
+	elseif ponts > 1 and ponts <= 4 then ponts = 4
+	elseif ponts > 4 and ponts <= 6 then ponts = 6
+	elseif ponts > 6 then ponts = 8 end
+	Misc.givePoints(ponts, vector(p.x, p.y), false)
 end
 
 local function enter_castle(p_id)

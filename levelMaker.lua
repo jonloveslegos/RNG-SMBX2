@@ -23,7 +23,7 @@ function levelMaker.onTickMake(levelType)
         table.insert(tosave,saving[i].height)
         table.insert(tosave,saving[i].contentID)
         table.insert(tosave,saving[i].isHidden)
-        table.insert(tosave,saving[i].invisible)
+        table.insert(tosave,saving[i]:mem(0x5A,FIELD_BOOL))
         table.insert(tosave,saving[i].slippery)
         table.insert(savedCode,tosave)
     end
