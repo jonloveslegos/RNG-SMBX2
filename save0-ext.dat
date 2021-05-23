@@ -2,9 +2,11 @@
 --[1]--
 {
    ["savedGeneration"]={2},
-   ["__costumes"]={3},
-   ["__launcher"]={4},
-   ["_basegame"]={5}
+   ["__launcher"]={3},
+   ["_basegame"]={4},
+   ["__costumes"]={5},
+   ["worldCounter"]=1,
+   ["levelCounter"]=1
 },
 --[2]--
 {
@@ -16,15 +18,15 @@
 },
 --[4]--
 {
-
-},
---[5]--
-{
    ["bigSwitch"]={6},
    ["_characterdata"]={7},
    ["starcoin"]={8},
    ["hud"]={9},
    ["starcoinCounter"]=0
+},
+--[5]--
+{
+
 },
 --[6]--
 {
@@ -46,11 +48,14 @@
 },
 --[8]--
 {
-   ["levelGenRoom.lvlx"]={21}
+   ["levelGenRoom.lvlx"]={21},
+   ["startCastle1.lvlx"]={22},
+   ["end2.lvlx"]={23},
+   ["endCastle1.lvlx"]={24}
 },
 --[9]--
 {
-   ["score"]=4760
+   ["score"]=334530
 },
 --[10]--
 {
@@ -143,9 +148,36 @@
 --[21]--
 {
    ["maxID"]=0,
-   ["alive"]={22}
+   ["alive"]={25}
 },
 --[22]--
+{
+   ["maxID"]=0,
+   ["alive"]={26}
+},
+--[23]--
+{
+   ["maxID"]=0,
+   ["alive"]={27}
+},
+--[24]--
+{
+   ["maxID"]=0,
+   ["alive"]={28}
+},
+--[25]--
+{
+
+},
+--[26]--
+{
+
+},
+--[27]--
+{
+
+},
+--[28]--
 {
 
 }

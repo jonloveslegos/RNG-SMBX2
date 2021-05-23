@@ -38,6 +38,7 @@ function levelMaker.onTickMake(levelType)
         table.insert(tosave,saving[i].ai3)
         table.insert(tosave,saving[i].ai4)
         table.insert(tosave,saving[i].ai5)
+        table.insert(tosave,saving[i]:mem(0xD8,FIELD_FLOAT))
         table.insert(savedNPC,tosave)
     end
     saving = BGO.get()

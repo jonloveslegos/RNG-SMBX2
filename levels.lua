@@ -1,33 +1,68 @@
 levels = {}
-possibleStarts = {}
-local StartNames = {
+local StartNames = {}
+local PowerNames = {}
+local MainNames = {}
+local EndNames = {}
+local BonusNames = {}
+local StartGrassNames = {
 "start1",
 }
-possiblePowers = {}
-local PowerNames = {
+local PowerGrassNames = {
 "power1",
 "power2",
 "power3",
 }
-possibleMain = {}
-local MainNames = {
+local MainGrassNames = {
 "main1",
 "main2",
 "main3",
 "main4",
 }
-possibleEnd = {}
-local EndNames = {
+local EndGrassNames = {
 "end1",
+"end2",
 }
-possibleBonus = {}
-local BonusNames = {
+local BonusGrassNames = {
 "bonus1",
 "bonus2",
 }
+local StartCastleNames = {
+"startCastle1",
+}
+local PowerCastleNames = {
+"powerCastle1",
+"powerCastle2",
+"powerCastle3",
+}
+local MainCastleNames = {
+"mainCastle1",
+"mainCastle2",
+"mainCastle3",
+"mainCastle4",
+}
+local EndCastleNames = {
+"endCastle1",
+}
+local BonusCastleNames = {
+}
+possibleStarts = {}
+possiblePowers = {}
+possibleMain = {}
+possibleBonus = {}
+possibleEnd = {}
+chosenBiome = ""
+possibleBiomes = {
+"grass",
+"castle",
+}
+levels.AIS = {}
+SaveData.levelCounter = SaveData.levelCounter or 1
+SaveData.worldCounter = SaveData.worldCounter or 1
 local bgoCounter = 1
+local times = 0
 function addObjects(levelScript,sectn,yoff,xoff)
 	local bounds = sectn.boundary
+	times = times+20
 	local offSet = math.abs(sectn.boundary.left-sectn.boundary.right)+xoff
 	bounds.right = bounds.right+levelScript.width
 	for b=1,tablelength(levelScript.blocks) do
@@ -43,7 +78,9 @@ function addObjects(levelScript,sectn,yoff,xoff)
 	for b=1,tablelength(levelScript.npc) do
 			local currBlock = levelScript.npc[b]
 			local spawned = NPC.spawn(currBlock[1],currBlock[2]+offSet,currBlock[3]+yoff,sectn.idx,true)
-			spawned.direction = -1
+			if currBlock[9] ~= nil then
+				spawned:mem(0xD8,FIELD_FLOAT,currBlock[9])
+			end
 	end
 	for b=1,tablelength(levelScript.bgo) do
 			if bgoCounter > tablelength(BGO.get()) then
@@ -60,8 +97,12 @@ function addObjects(levelScript,sectn,yoff,xoff)
 	return bounds
 end
 
+function levels.tick()
+end
+
 function levels.generate()
 	if Level.filename() == "levelGenRoom.lvlx" then
+		
 		for b=1,tablelength(Block.get()) do Block.get()[b]:delete() end
 		for b=1,tablelength(NPC.get()) do NPC.get()[b]:delete() end
 		local start = RNG.randomInt(1,tablelength(possibleStarts))
@@ -74,10 +115,10 @@ function levels.generate()
 			sec.backgroundID = levelScript.background
 			sec.musicID = levelScript.music
 			player.x = levelScript.playerX
-			player.y = levelScript.playerY-(32)
+			player.y = levelScript.playerY-32
 			if player2 ~= nil then
-				player.x = levelScript.playerX-32
-				player.y = levelScript.playerY-(32)
+				player2.x = levelScript.playerX-32
+				player2.y = levelScript.playerY-32
 			end
 			sec.boundary = addObjects(levelScript,sec,0,0)
 		end
@@ -90,7 +131,7 @@ function levels.generate()
 					sec.boundary = addObjects(levelScript,sec,0,0)
 				end
 			end
-			for a=1,RNG.randomInt(1,2) do
+			for a=1,RNG.randomInt(2,3) do
 				local chose = RNG.randomInt(1,tablelength(possibleMain))
 				if tablelength(possibleMain) > 0 then
 					local levelScript = possibleMain[chose]
@@ -149,10 +190,23 @@ function levels.generate()
 			local sec = Section(0)
 			sec.boundary = addObjects(levelScript,sec,0,0)
 		end
+		Timer.activate(times)
 	end
 end
 
 function levels.loadLevels()
+	if SaveData.levelCounter > 0 and SaveData.levelCounter < 4 then chosenBiome = "grass" end
+	if SaveData.levelCounter == 4 then chosenBiome = "castle" end
+	if chosenBiome == "grass" then StartNames = StartGrassNames end
+	if chosenBiome == "grass" then MainNames = MainGrassNames end
+	if chosenBiome == "grass" then PowerNames = PowerGrassNames end
+	if chosenBiome == "grass" then EndNames = EndGrassNames end
+	if chosenBiome == "grass" then BonusNames = BonusGrassNames end
+	if chosenBiome == "castle" then StartNames = StartCastleNames end
+	if chosenBiome == "castle" then MainNames = MainCastleNames end
+	if chosenBiome == "castle" then PowerNames = PowerCastleNames end
+	if chosenBiome == "castle" then EndNames = EndCastleNames end
+	if chosenBiome == "castle" then BonusNames = BonusCastleNames end
 	possibleStarts = {}
 	if Level.filename() == "levelGenRoom.lvlx" then
 		if tablelength(StartNames) > 0 then
