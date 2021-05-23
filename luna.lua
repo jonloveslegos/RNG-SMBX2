@@ -41,6 +41,14 @@ function onInputUpdate()
     end
 end
 
+function onDraw()
+    local imge = Graphics.loadImage("background-752.png")
+    for i=1,tablelength(Warp.get()) do
+        Graphics.drawBox{x=Warp.get()[i].entranceX,y=Warp.get()[i].entranceY,w=32,h=32,sceneCoords=true,color=Color.green}
+        Graphics.drawBox{x=Warp.get()[i].exitX,y=Warp.get()[i].exitY,w=32,h=32,sceneCoords=true,color=Color.red}
+    end
+end
+
 function onHUDDraw(camIdx)
     local offset = 0
     if Camera.get()[camIdx].width < 800 then offset = (Camera.get()[camIdx].width/2)-40 end
@@ -66,9 +74,6 @@ function onTick()
     if generateLevel == true then
         levelMaker:onTickMake(levelType)
         generateLevel = false
-    end
-    for i=1,tablelength(NPC.get(177)) do
-        NPC.get(177)[i].ai1 = 3
     end
     endTimer = endTimer-1
     if endTimer <= 0 and endTimer > -100 then 

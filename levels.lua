@@ -81,6 +81,9 @@ function addObjects(levelScript,sectn,yoff,xoff)
 			if currBlock[9] ~= nil then
 				spawned:mem(0xD8,FIELD_FLOAT,currBlock[9])
 			end
+			if currBlock[1] == 176 or currBlock[1] == 177 then
+				spawned:mem(0xDE,FIELD_WORD,currBlock[4])
+			end
 	end
 	for b=1,tablelength(levelScript.bgo) do
 			if bgoCounter > tablelength(BGO.get()) then
@@ -149,6 +152,7 @@ function levels.generate()
 					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
 			end
 			local warp = Warp.get()[1]
+			local startChose = chose
 			local sec = Section(1)
 			local bounds = sec.boundary
 			bounds.right = bounds.left
@@ -173,12 +177,59 @@ function levels.generate()
 				warp = Warp.get()[2]
 				warp.entranceX = blockChose.x-32
 				warp.entranceY = blockChose.y+32
-				chose = RNG.randomInt(1,tablelength(Block.get(196)))
+				chose = startChose
 				blockChose = Block.get(196)[chose]
 				for p=1,50 do
-					chose = RNG.randomInt(1,tablelength(Block.get(196)))
+					chose = chose+1
+					if chose > tablelength(Block.get(196)) then chose = 1 end
 					blockChose = Block.get(196)[chose]
 					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
+				end
+				warp.exitX = blockChose.x+16
+				warp.exitY = blockChose.y-32
+			end
+		end
+		if tablelength(Block.get(196)) > 2 and tablelength(possibleBonus) > 0 then
+			local chose = RNG.randomInt(1,tablelength(Block.get(196)))
+			local blockChose = Block.get(196)[chose]
+			local startChose = chose
+			for p=1,50 do
+					chose = RNG.randomInt(1,tablelength(Block.get(196)))
+					blockChose = Block.get(196)[chose]
+					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) and tablelength(Warp.getIntersectingEntrance(blockChose.x+16,blockChose.y-32,blockChose.x+16+32,blockChose.y-32+32)) <= 0 then break end
+			end
+			local warp = Warp.get()[3]
+			local sec = Section(2)
+			local bounds = sec.boundary
+			bounds.right = bounds.left
+			sec.boundary = bounds
+			warp.entranceX = blockChose.x+16
+			warp.entranceY = blockChose.y-32
+			chose = RNG.randomInt(1,tablelength(possibleBonus))
+			local levelScript = possibleBonus[chose]
+			sec.backgroundID = levelScript.background
+			sec.musicID = levelScript.music
+			sec.boundary = addObjects(levelScript,sec,40000,40000)
+			warp.exitX = levelScript.playerX+40000
+			warp.exitY = levelScript.playerY-32+(40000)
+			chose = RNG.randomInt(1,tablelength(Block.get(376)))
+			if tablelength(Block.get(376)) > 1 then
+				blockChose = Block.get(376)[chose]
+				for p=1,50 do
+					chose = RNG.randomInt(1,tablelength(Block.get(376)))
+					blockChose = Block.get(376)[chose]
+					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(2)) then break end
+				end
+				warp = Warp.get()[4]
+				warp.entranceX = blockChose.x-32
+				warp.entranceY = blockChose.y+32
+				chose = startChose
+				blockChose = Block.get(196)[chose]
+				for p=1,50 do
+					chose = chose+1
+					if chose > tablelength(Block.get(196)) then chose = 1 end
+					blockChose = Block.get(196)[chose]
+					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) and tablelength(Warp.getIntersectingExit(blockChose.x+16,blockChose.y-32,blockChose.x+16+32,blockChose.y-32+32)) <= 0 then break end
 				end
 				warp.exitX = blockChose.x+16
 				warp.exitY = blockChose.y-32
