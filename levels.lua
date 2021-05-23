@@ -26,6 +26,7 @@ local BonusGrassNames = {
 "bonus1",
 "bonus2",
 }
+
 local StartCastleNames = {
 "startCastle1",
 }
@@ -45,6 +46,26 @@ local EndCastleNames = {
 }
 local BonusCastleNames = {
 }
+
+local StartWaterNames = {
+"startWater1",
+}
+local PowerWaterNames = {
+"powerWater1",
+"powerWater2",
+"powerWater3",
+}
+local MainWaterNames = {
+"mainWater1",
+"mainWater2",
+"mainWater3",
+"mainWater4",
+}
+local EndWaterNames = {
+"endWater1",
+}
+local BonusWaterNames = {
+}
 possibleStarts = {}
 possiblePowers = {}
 possibleMain = {}
@@ -54,6 +75,7 @@ chosenBiome = ""
 possibleBiomes = {
 "grass",
 "castle",
+"water",
 }
 levels.AIS = {}
 SaveData.levelCounter = SaveData.levelCounter or 1
@@ -80,6 +102,7 @@ function addObjects(levelScript,sectn,yoff,xoff)
 			local spawned = NPC.spawn(currBlock[1],currBlock[2]+offSet,currBlock[3]+yoff,sectn.idx,true)
 			if currBlock[9] ~= nil then
 				spawned:mem(0xD8,FIELD_FLOAT,currBlock[9])
+				spawned.direction = currBlock[9]
 			end
 			if currBlock[1] == 176 or currBlock[1] == 177 then
 				spawned:mem(0xDE,FIELD_WORD,currBlock[4])
@@ -117,6 +140,9 @@ function levels.generate()
 			sec.boundary = bounds
 			sec.backgroundID = levelScript.background
 			sec.musicID = levelScript.music
+			if levelScript.water ~= nil then
+				sec.isUnderwater = levelScript.water
+			end
 			player.x = levelScript.playerX
 			player.y = levelScript.playerY-32
 			if player2 ~= nil then
@@ -163,14 +189,18 @@ function levels.generate()
 			local levelScript = possibleBonus[chose]
 			sec.backgroundID = levelScript.background
 			sec.musicID = levelScript.music
+			if levelScript.water ~= nil then
+				sec.isUnderwater = levelScript.water
+			end
 			sec.boundary = addObjects(levelScript,sec,20000,20000)
 			warp.exitX = levelScript.playerX+20000
 			warp.exitY = levelScript.playerY-32+(20000)
-			chose = RNG.randomInt(1,tablelength(Block.get(376)))
+			chose = 1
 			if tablelength(Block.get(376)) > 0 then
 				blockChose = Block.get(376)[chose]
 				for p=1,50 do
-					chose = RNG.randomInt(1,tablelength(Block.get(376)))
+					chose = chose+1
+					if chose > tablelength(Block.get(376)) then chose = 1 end
 					blockChose = Block.get(376)[chose]
 					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(1)) then break end
 				end
@@ -196,7 +226,7 @@ function levels.generate()
 			for p=1,50 do
 					chose = RNG.randomInt(1,tablelength(Block.get(196)))
 					blockChose = Block.get(196)[chose]
-					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) and tablelength(Warp.getIntersectingEntrance(blockChose.x+16,blockChose.y-32,blockChose.x+16+32,blockChose.y-32+32)) <= 0 then break end
+					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
 			end
 			local warp = Warp.get()[3]
 			local sec = Section(2)
@@ -212,24 +242,25 @@ function levels.generate()
 			sec.boundary = addObjects(levelScript,sec,40000,40000)
 			warp.exitX = levelScript.playerX+40000
 			warp.exitY = levelScript.playerY-32+(40000)
-			chose = RNG.randomInt(1,tablelength(Block.get(376)))
+			chose = 1
 			if tablelength(Block.get(376)) > 1 then
 				blockChose = Block.get(376)[chose]
 				for p=1,50 do
-					chose = RNG.randomInt(1,tablelength(Block.get(376)))
+					chose = chose+1
+					if chose > tablelength(Block.get(376)) then chose = 1 end
 					blockChose = Block.get(376)[chose]
 					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(2)) then break end
 				end
 				warp = Warp.get()[4]
-				warp.entranceX = blockChose.x-32
-				warp.entranceY = blockChose.y+32
+				warp.entranceX = blockChose.x-32+20000
+				warp.entranceY = blockChose.y+32+20000
 				chose = startChose
 				blockChose = Block.get(196)[chose]
 				for p=1,50 do
 					chose = chose+1
 					if chose > tablelength(Block.get(196)) then chose = 1 end
 					blockChose = Block.get(196)[chose]
-					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) and tablelength(Warp.getIntersectingExit(blockChose.x+16,blockChose.y-32,blockChose.x+16+32,blockChose.y-32+32)) <= 0 then break end
+					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
 				end
 				warp.exitX = blockChose.x+16
 				warp.exitY = blockChose.y-32
@@ -246,8 +277,9 @@ function levels.generate()
 end
 
 function levels.loadLevels()
-	if SaveData.levelCounter > 0 and SaveData.levelCounter < 4 then chosenBiome = "grass" end
+	if SaveData.levelCounter == 1 or SaveData.levelCounter == 3 then chosenBiome = "grass" end
 	if SaveData.levelCounter == 4 then chosenBiome = "castle" end
+	if SaveData.levelCounter == 2 then chosenBiome = "water" end
 	if chosenBiome == "grass" then StartNames = StartGrassNames end
 	if chosenBiome == "grass" then MainNames = MainGrassNames end
 	if chosenBiome == "grass" then PowerNames = PowerGrassNames end
@@ -258,6 +290,11 @@ function levels.loadLevels()
 	if chosenBiome == "castle" then PowerNames = PowerCastleNames end
 	if chosenBiome == "castle" then EndNames = EndCastleNames end
 	if chosenBiome == "castle" then BonusNames = BonusCastleNames end
+	if chosenBiome == "water" then StartNames = StartWaterNames end
+	if chosenBiome == "water" then MainNames = MainWaterNames end
+	if chosenBiome == "water" then PowerNames = PowerWaterNames end
+	if chosenBiome == "water" then EndNames = EndWaterNames end
+	if chosenBiome == "water" then BonusNames = BonusWaterNames end
 	possibleStarts = {}
 	if Level.filename() == "levelGenRoom.lvlx" then
 		if tablelength(StartNames) > 0 then

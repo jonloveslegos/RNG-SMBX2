@@ -50,7 +50,14 @@ function levelMaker.onTickMake(levelType)
         table.insert(savedBGO,tosave)
     end
     local dataFile = io.open(Misc.episodePath()..Level.name()..".txt", "w+" )
-    dataFile:write(Level.name().." = {}".."\n"..Level.name()..".width = "..math.abs(Section.get(1).boundary.left-Section.get(1).boundary.right).."\n"..Level.name()..".playerY = "..playerStartY.."\n"..Level.name()..".playerX = "..playerStartX.."\n"..Level.name()..".background = "..Section.get(1).backgroundID.."\n"..Level.name()..".music = "..Section.get(1).musicID.."\n"..Level.name()..".bgo = {\n"..createStringFromTable(savedBGO).."}".."\n"..Level.name()..".npc = {\n"..createStringFromTable(savedNPC).."}".."\n"..Level.name()..".blocks = {\n"..createStringFromTable(savedCode).."}\nreturn "..Level.name())
+    dataFile:write(Level.name().." = {}".."\n".."\n"..Level.name()..".water = "..createStringFromBool(Section.get(1).isUnderwater).."\n"..Level.name()..".width = "..math.abs(Section.get(1).boundary.left-Section.get(1).boundary.right).."\n"..Level.name()..".playerY = "..playerStartY.."\n"..Level.name()..".playerX = "..playerStartX.."\n"..Level.name()..".background = "..Section.get(1).backgroundID.."\n"..Level.name()..".music = "..Section.get(1).musicID.."\n"..Level.name()..".bgo = {\n"..createStringFromTable(savedBGO).."}".."\n"..Level.name()..".npc = {\n"..createStringFromTable(savedNPC).."}".."\n"..Level.name()..".blocks = {\n"..createStringFromTable(savedCode).."}\nreturn "..Level.name())
+end
+
+function createStringFromBool(t)
+    local str = ""
+    if t == true then str = str.."true".."" end
+    if t == false then str = str.."false".."" end
+    return str
 end
 
 function createStringFromTable(t)
