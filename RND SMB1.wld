@@ -2,9 +2,9 @@
 "RND SMB1"
 #FALSE#
 #FALSE#
-#FALSE#
-#FALSE#
-#FALSE#
+#TRUE#
+#TRUE#
+#TRUE#
 "levelGenRoom.lvlx"
 #TRUE#
 #FALSE#

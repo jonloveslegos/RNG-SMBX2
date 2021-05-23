@@ -66,6 +66,29 @@ local EndWaterNames = {
 }
 local BonusWaterNames = {
 }
+
+local StartUndergroundNames = {
+"startGround1",
+}
+local PowerUndergroundNames = {
+"powerGround1",
+"powerGround2",
+"powerGround3",
+}
+local MainUndergroundNames = {
+"mainGround1",
+"mainGround2",
+"mainGround3",
+"mainGround4",
+}
+local EndUndergroundNames = {
+"endGround1",
+}
+local BonusUndergroundNames = {
+"bonus1",
+"bonus2",
+}
+
 possibleStarts = {}
 possiblePowers = {}
 possibleMain = {}
@@ -76,6 +99,7 @@ possibleBiomes = {
 "grass",
 "castle",
 "water",
+"underground",
 }
 levels.AIS = {}
 SaveData.levelCounter = SaveData.levelCounter or 1
@@ -279,7 +303,9 @@ end
 function levels.loadLevels()
 	if SaveData.levelCounter == 1 or SaveData.levelCounter == 3 then chosenBiome = "grass" end
 	if SaveData.levelCounter == 4 then chosenBiome = "castle" end
-	if SaveData.levelCounter == 2 then chosenBiome = "water" end
+	if SaveData.levelCounter == 2 then 
+		if SaveData.worldCounter/2 ~= math.floor(SaveData.worldCounter/2) then chosenBiome = "underground" else chosenBiome = "water" end
+	end
 	if chosenBiome == "grass" then StartNames = StartGrassNames end
 	if chosenBiome == "grass" then MainNames = MainGrassNames end
 	if chosenBiome == "grass" then PowerNames = PowerGrassNames end
@@ -295,6 +321,12 @@ function levels.loadLevels()
 	if chosenBiome == "water" then PowerNames = PowerWaterNames end
 	if chosenBiome == "water" then EndNames = EndWaterNames end
 	if chosenBiome == "water" then BonusNames = BonusWaterNames end
+
+	if chosenBiome == "underground" then StartNames = StartUndergroundNames end
+	if chosenBiome == "underground" then MainNames = MainUndergroundNames end
+	if chosenBiome == "underground" then PowerNames = PowerUndergroundNames end
+	if chosenBiome == "underground" then EndNames = EndUndergroundNames end
+	if chosenBiome == "underground" then BonusNames = BonusUndergroundNames end
 	possibleStarts = {}
 	if Level.filename() == "levelGenRoom.lvlx" then
 		if tablelength(StartNames) > 0 then

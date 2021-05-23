@@ -15,6 +15,9 @@ function onStart()
     levelMaker:onStartMake()
     levels:loadLevels()
     levels:generate()
+    Defines.player_grabSideEnabled = false
+    Defines.player_grabTopEnabled = false
+    Defines.player_grabShellEnabled = false
 end
 function onInputUpdate()
     if endTimer > -100 then
@@ -84,7 +87,7 @@ function onTick()
             if player2 ~= nil then
                 player2.powerup = 1
             end
-            Level.finish(5,false)
+            Level.finish(5,true)
         else
             Level.finish(2,false)
         end

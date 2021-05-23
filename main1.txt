@@ -1,6 +1,8 @@
 main1 = {}
+
+main1.water = false
 main1.width = 800
-main1.playerY = -200278
+main1.playerY = -200254
 main1.playerX = -199788
 main1.background = 10
 main1.music = 9
@@ -55,6 +57,28 @@ main1.npc = {
 -200096,
 0,
 0,
+0,
+0,
+0,
+-1,
+},
+{
+93,
+-199504,
+-200208,
+0,
+1,
+0,
+0,
+0,
+-1,
+},
+{
+93,
+-199408,
+-200240,
+0,
+1,
 0,
 0,
 0,

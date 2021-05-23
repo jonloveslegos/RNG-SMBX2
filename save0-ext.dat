@@ -20,9 +20,9 @@
 {
    ["bigSwitch"]={6},
    ["_characterdata"]={7},
-   ["starcoin"]={8},
-   ["hud"]={9},
-   ["starcoinCounter"]=0
+   ["starcoinCounter"]=0,
+   ["hud"]={8},
+   ["starcoin"]={9}
 },
 --[5]--
 {
@@ -48,14 +48,19 @@
 },
 --[8]--
 {
-   ["levelGenRoom.lvlx"]={21},
-   ["startCastle1.lvlx"]={22},
-   ["end2.lvlx"]={23},
-   ["endCastle1.lvlx"]={24}
+   ["score"]=434040
 },
 --[9]--
 {
-   ["score"]=334530
+   ["powerGround1.lvlx"]={21},
+   ["startCastle1.lvlx"]={22},
+   ["bonus1.lvlx"]={23},
+   ["bonus2.lvlx"]={24},
+   ["endCastle1.lvlx"]={25},
+   ["startGround1.lvlx"]={26},
+   ["end2.lvlx"]={27},
+   ["levelGenRoom.lvlx"]={28},
+   ["mainGround1.lvlx"]={29}
 },
 --[10]--
 {
@@ -148,36 +153,81 @@
 --[21]--
 {
    ["maxID"]=0,
-   ["alive"]={25}
+   ["alive"]={30}
 },
 --[22]--
 {
    ["maxID"]=0,
-   ["alive"]={26}
+   ["alive"]={31}
 },
 --[23]--
 {
    ["maxID"]=0,
-   ["alive"]={27}
+   ["alive"]={32}
 },
 --[24]--
 {
    ["maxID"]=0,
-   ["alive"]={28}
+   ["alive"]={33}
 },
 --[25]--
 {
-
+   ["maxID"]=0,
+   ["alive"]={34}
 },
 --[26]--
 {
-
+   ["maxID"]=0,
+   ["alive"]={35}
 },
 --[27]--
 {
-
+   ["maxID"]=0,
+   ["alive"]={36}
 },
 --[28]--
+{
+   ["maxID"]=0,
+   ["alive"]={37}
+},
+--[29]--
+{
+   ["maxID"]=0,
+   ["alive"]={38}
+},
+--[30]--
+{
+
+},
+--[31]--
+{
+
+},
+--[32]--
+{
+
+},
+--[33]--
+{
+
+},
+--[34]--
+{
+
+},
+--[35]--
+{
+
+},
+--[36]--
+{
+
+},
+--[37]--
+{
+
+},
+--[38]--
 {
 
 }

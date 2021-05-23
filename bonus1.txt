@@ -1,6 +1,8 @@
 bonus1 = {}
+
+bonus1.water = false
 bonus1.width = 800
-bonus1.playerY = -200502
+bonus1.playerY = -200478
 bonus1.playerX = -199852
 bonus1.background = 7
 bonus1.music = 4
