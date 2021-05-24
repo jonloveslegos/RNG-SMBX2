@@ -1,0 +1,114 @@
+mainIsland1 = {}
+
+mainIsland1.water = false
+mainIsland1.width = 800
+mainIsland1.playerY = -200158
+mainIsland1.playerX = -199420
+mainIsland1.background = 62
+mainIsland1.music = 9
+mainIsland1.bgo = {
+}
+mainIsland1.npc = {
+{
+175,
+-199520,
+-200192,
+0,
+0,
+0,
+0,
+0,
+-1,
+},
+{
+177,
+-199872,
+-200224,
+3,
+0,
+0,
+0,
+0,
+-1,
+},
+}
+mainIsland1.blocks = {
+{
+287,
+-200000,
+-200096,
+128,
+96,
+0,
+false,
+false,
+false,
+},
+{
+193,
+-199968,
+-200224,
+32,
+32,
+1,
+false,
+false,
+false,
+},
+{
+287,
+-199776,
+-200192,
+64,
+192,
+0,
+false,
+false,
+false,
+},
+{
+287,
+-199616,
+-200160,
+128,
+160,
+0,
+false,
+false,
+false,
+},
+{
+193,
+-199584,
+-200288,
+32,
+32,
+1,
+false,
+false,
+false,
+},
+{
+287,
+-199456,
+-200128,
+96,
+128,
+0,
+false,
+false,
+false,
+},
+{
+287,
+-199296,
+-200096,
+96,
+96,
+0,
+false,
+false,
+false,
+},
+}
+return mainIsland1

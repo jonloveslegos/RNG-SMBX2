@@ -89,6 +89,26 @@ local BonusUndergroundNames = {
 "bonus2",
 }
 
+local StartIslandNames = {
+"startIsland1",
+}
+local PowerIslandNames = {
+"powerIsland1",
+"powerIsland2",
+"powerIsland3",
+}
+local MainIslandNames = {
+"mainIsland1",
+"mainIsland2",
+"mainIsland3",
+"mainIsland4",
+}
+local EndIslandNames = {
+"endIsland1",
+}
+local BonusIslandNames = {
+}
+
 possibleStarts = {}
 possiblePowers = {}
 possibleMain = {}
@@ -100,6 +120,7 @@ possibleBiomes = {
 "castle",
 "water",
 "underground",
+"island",
 }
 levels.AIS = {}
 SaveData.levelCounter = SaveData.levelCounter or 1
@@ -130,6 +151,7 @@ function addObjects(levelScript,sectn,yoff,xoff)
 			end
 			if currBlock[1] == 176 or currBlock[1] == 177 then
 				spawned:mem(0xDE,FIELD_WORD,currBlock[4])
+				spawned.ai1 = currBlock[4]
 			end
 	end
 	for b=1,tablelength(levelScript.bgo) do
@@ -306,6 +328,9 @@ function levels.loadLevels()
 	if SaveData.levelCounter == 2 then 
 		if SaveData.worldCounter/2 ~= math.floor(SaveData.worldCounter/2) then chosenBiome = "underground" else chosenBiome = "water" end
 	end
+	if SaveData.levelCounter == 3 then 
+		if SaveData.worldCounter/2 ~= math.floor(SaveData.worldCounter/2) then chosenBiome = "island" else chosenBiome = "island" end
+	end
 	if chosenBiome == "grass" then StartNames = StartGrassNames end
 	if chosenBiome == "grass" then MainNames = MainGrassNames end
 	if chosenBiome == "grass" then PowerNames = PowerGrassNames end
@@ -327,6 +352,12 @@ function levels.loadLevels()
 	if chosenBiome == "underground" then PowerNames = PowerUndergroundNames end
 	if chosenBiome == "underground" then EndNames = EndUndergroundNames end
 	if chosenBiome == "underground" then BonusNames = BonusUndergroundNames end
+
+	if chosenBiome == "island" then StartNames = StartIslandNames end
+	if chosenBiome == "island" then MainNames = MainIslandNames end
+	if chosenBiome == "island" then PowerNames = PowerIslandNames end
+	if chosenBiome == "island" then EndNames = EndIslandNames end
+	if chosenBiome == "island" then BonusNames = BonusIslandNames end
 	possibleStarts = {}
 	if Level.filename() == "levelGenRoom.lvlx" then
 		if tablelength(StartNames) > 0 then

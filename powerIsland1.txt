@@ -1,0 +1,125 @@
+powerIsland1 = {}
+
+powerIsland1.water = false
+powerIsland1.width = 800
+powerIsland1.playerY = -200142
+powerIsland1.playerX = -199932
+powerIsland1.background = 62
+powerIsland1.music = 9
+powerIsland1.bgo = {
+}
+powerIsland1.npc = {
+{
+175,
+-199776,
+-200224,
+0,
+0,
+0,
+0,
+0,
+-1,
+},
+{
+175,
+-199264,
+-200128,
+0,
+0,
+0,
+0,
+0,
+-1,
+},
+{
+177,
+-199584,
+-200320,
+2,
+0,
+1,
+0,
+0,
+-1,
+},
+}
+powerIsland1.blocks = {
+{
+287,
+-200000,
+-200096,
+128,
+96,
+0,
+false,
+false,
+false,
+},
+{
+287,
+-199808,
+-200192,
+96,
+192,
+0,
+false,
+false,
+false,
+},
+{
+287,
+-199648,
+-200128,
+192,
+128,
+0,
+false,
+false,
+false,
+},
+{
+287,
+-199552,
+-200256,
+96,
+128,
+0,
+false,
+false,
+false,
+},
+{
+193,
+-199520,
+-200384,
+32,
+32,
+1182,
+false,
+false,
+false,
+},
+{
+287,
+-199424,
+-200160,
+96,
+160,
+0,
+false,
+false,
+false,
+},
+{
+287,
+-199296,
+-200096,
+96,
+96,
+0,
+false,
+false,
+false,
+},
+}
+return powerIsland1

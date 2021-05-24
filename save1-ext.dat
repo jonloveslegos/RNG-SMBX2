@@ -2,9 +2,11 @@
 --[1]--
 {
    ["savedGeneration"]={2},
-   ["__costumes"]={3},
-   ["__launcher"]={4},
-   ["_basegame"]={5}
+   ["__launcher"]={3},
+   ["_basegame"]={4},
+   ["__costumes"]={5},
+   ["worldCounter"]=2,
+   ["levelCounter"]=2
 },
 --[2]--
 {
@@ -16,15 +18,15 @@
 },
 --[4]--
 {
-
-},
---[5]--
-{
    ["bigSwitch"]={6},
    ["_characterdata"]={7},
    ["starcoin"]={8},
    ["hud"]={9},
    ["starcoinCounter"]=0
+},
+--[5]--
+{
+
 },
 --[6]--
 {
@@ -50,7 +52,7 @@
 },
 --[9]--
 {
-   ["score"]=13520
+   ["score"]=80830
 },
 --[10]--
 {
