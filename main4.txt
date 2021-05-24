@@ -1,6 +1,8 @@
 main4 = {}
+
+main4.water = false
 main4.width = 800
-main4.playerY = -200342
+main4.playerY = -200318
 main4.playerX = -199868
 main4.background = 10
 main4.music = 9
@@ -29,8 +31,8 @@ main4.bgo = {
 main4.npc = {
 {
 89,
--199488,
--200224,
+-199296,
+-200096,
 0,
 0,
 0,
@@ -40,7 +42,7 @@ main4.npc = {
 },
 {
 89,
--199552,
+-199232,
 -200224,
 0,
 0,

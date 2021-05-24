@@ -11,6 +11,7 @@ local antiZipP2 = require("antizipP2")
 local handycam = require("handycam")
 local npcManager = require("npcManager")
 endTimer = -100
+SaveData.totalWins = SaveData.totalWins or 0
 local playerWon = false
 local music = nil
 -- Run code on the first frame
@@ -47,13 +48,31 @@ function onInputUpdate()
     end
 end
 
---[[function onDraw()
+function onDraw()
     local imge = Graphics.loadImage("background-752.png")
     for i=1,tablelength(Warp.get()) do
-        Graphics.drawBox{x=Warp.get()[i].entranceX,y=Warp.get()[i].entranceY,w=32,h=32,sceneCoords=true,color=Color.green}
-        Graphics.drawBox{x=Warp.get()[i].exitX,y=Warp.get()[i].exitY,w=32,h=32,sceneCoords=true,color=Color.red}
+        Graphics.drawBox{x=Warp.get()[i].entranceX,y=Warp.get()[i].entranceY,w=32,h=16,sceneCoords=true,color=Color.green}
+        Graphics.drawBox{x=Warp.get()[i].exitX,y=Warp.get()[i].exitY+16,w=32,h=16,sceneCoords=true,color=Color.red}
     end
-end]]
+    local blocks = Block.get(188)
+    for i=1,tablelength(blocks) do
+        if blocks[i].contentID == 1186 then
+            Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.green}
+        end
+        if blocks[i].contentID == 1293 then
+            Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.yellow}
+        end
+    end
+    local blocks = Block.get(60)
+    for i=1,tablelength(blocks) do
+        if blocks[i].contentID == 1186 then
+            Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.green}
+        end
+        if blocks[i].contentID == 1293 then
+            Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.yellow}
+        end
+    end
+end
 
 function onHUDDraw(camIdx)
     local offset = 0
@@ -76,6 +95,7 @@ end
 -- (code will be executed before game logic will be processed)
 function onTick()
     levels:tick()
+    Progress.value = SaveData.totalWins
     for i=1,tablelength(NPC.get()) do
         if NPC.get()[i]:mem(0x138,FIELD_WORD) == 1 then
             NPC.get()[i].direction = 1
@@ -101,6 +121,7 @@ function onTick()
         if SaveData.worldCounter >= 8 then
             SaveData.worldCounter = 1
             SaveData.levelCounter = 1
+            SaveData.totalWins=SaveData.totalWins+1
             Level.finish(5,true)
         else
             Level.finish(2,false)
@@ -165,6 +186,7 @@ function onExitLevel(win)
             SaveData.levelCounter = 1 
             SaveData.worldCounter = SaveData.worldCounter+1 
         end
+        SaveData.totalWins=SaveData.totalWins+1
     end
 end
 function onNPCKill(eventToken,killedNPC,harmType)

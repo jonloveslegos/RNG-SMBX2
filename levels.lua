@@ -361,6 +361,46 @@ function levels.generate()
 			local sec = Section(0)
 			sec.boundary = addObjects(levelScript,sec,0,0)
 		end
+		for i=1,RNG.randomInt(0,1) do
+			local blocks = Block.get(188)
+			local complete = false
+			local blcks = {}
+			for i=1,tablelength(blocks) do
+				if tablelength(Block.getIntersecting(blocks[i].x,blocks[i].y+96+32,blocks[i].x+blocks[i].width,blocks[i].y+96+32+32)) >= 1 and blocks[i].contentID <= 0 and tablelength(Block.getIntersecting(blocks[i].x,blocks[i].y+33,blocks[i].x+blocks[i].width,blocks[i].y+96)) < 1 then
+					table.insert(blcks,blocks[i])
+				end
+			end
+			blocks = Block.get(60)
+			for i=1,tablelength(blocks) do
+					if tablelength(Block.getIntersecting(blocks[i].x,blocks[i].y+96+32,blocks[i].x+blocks[i].width,blocks[i].y+96+32+32)) >= 1 and blocks[i].contentID <= 0 and tablelength(Block.getIntersecting(blocks[i].x,blocks[i].y+33,blocks[i].x+blocks[i].width,blocks[i].y+96)) < 1 then
+						table.insert(blcks,blocks[i])
+					end
+			end
+			if tablelength(blcks) > 0 then
+				local chose = RNG.randomInt(1,tablelength(blcks))
+				blcks[chose].contentID = 1293
+			end
+		end
+		for i=1,RNG.randomInt(1,3) do
+			local blocks = Block.get(188)
+			local complete = false
+			local blcks = {}
+			for i=1,tablelength(blocks) do
+				if tablelength(Block.getIntersecting(blocks[i].x,blocks[i].y+96+32,blocks[i].x+blocks[i].width,blocks[i].y+96+32+32)) >= 1 and blocks[i].contentID <= 0 and tablelength(Block.getIntersecting(blocks[i].x,blocks[i].y+33,blocks[i].x+blocks[i].width,blocks[i].y+96)) < 1 then
+					table.insert(blcks,blocks[i])
+				end
+			end
+			blocks = Block.get(60)
+			for i=1,tablelength(blocks) do
+					if tablelength(Block.getIntersecting(blocks[i].x,blocks[i].y+96+32,blocks[i].x+blocks[i].width,blocks[i].y+96+32+32)) >= 1 and blocks[i].contentID <= 0 and tablelength(Block.getIntersecting(blocks[i].x,blocks[i].y+33,blocks[i].x+blocks[i].width,blocks[i].y+96)) < 1 then
+						table.insert(blcks,blocks[i])
+					end
+			end
+			if tablelength(blcks) > 0 then
+				local chose = RNG.randomInt(1,tablelength(blcks))
+				blcks[chose].contentID = 1186
+			end
+		end
 		Timer.activate(times)
 	end
 end
