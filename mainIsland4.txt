@@ -2,7 +2,7 @@ mainIsland4 = {}
 
 mainIsland4.water = false
 mainIsland4.width = 800
-mainIsland4.playerY = -200494
+mainIsland4.playerY = -200462
 mainIsland4.playerX = -199564
 mainIsland4.background = 62
 mainIsland4.music = 9
@@ -15,7 +15,7 @@ mainIsland4.npc = {
 -200288,
 2,
 0,
-0,
+1,
 0,
 0,
 -1,
@@ -34,7 +34,7 @@ mainIsland4.npc = {
 {
 175,
 -199680,
--200384,
+-200352,
 0,
 0,
 0,
@@ -91,9 +91,9 @@ false,
 {
 287,
 -199680,
--200352,
+-200320,
 128,
-160,
+128,
 0,
 false,
 false,
@@ -124,7 +124,7 @@ false,
 {
 287,
 -199648,
--200448,
+-200416,
 128,
 96,
 0,
@@ -135,9 +135,9 @@ false,
 {
 287,
 -199552,
--200352,
+-200320,
 128,
-160,
+128,
 0,
 false,
 false,
@@ -146,7 +146,7 @@ false,
 {
 193,
 -199456,
--200480,
+-200448,
 32,
 32,
 1,

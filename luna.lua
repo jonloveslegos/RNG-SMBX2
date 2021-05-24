@@ -63,6 +63,11 @@ end
 -- (code will be executed before game logic will be processed)
 function onTick()
     levels:tick()
+    for i=1,tablelength(NPC.get()) do
+        if NPC.get()[i]:mem(0x138,FIELD_WORD) == 1 then
+            NPC.get()[i].direction = 1
+        end
+    end
     if player.mount == MOUNT_NONE then
         player:mem(0x120,FIELD_BOOL,false)
     end
