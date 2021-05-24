@@ -99,10 +99,6 @@ function onTick()
         if SaveData.worldCounter >= 8 then
             SaveData.worldCounter = 1
             SaveData.levelCounter = 1
-            player.powerup = 1
-            if player2 ~= nil then
-                player2.powerup = 1
-            end
             Level.finish(5,true)
         else
             Level.finish(2,false)
