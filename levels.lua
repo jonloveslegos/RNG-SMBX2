@@ -197,13 +197,13 @@ function levels.generate()
 			end
 			sec.boundary = addObjects(levelScript,sec,0,0)
 		end
-		local powerus = RNG.randomInt(1,4)
+		local powerus = 0
 		if chosenBiome == "castle" then powerus = RNG.randomInt(1,2) end
-		if chosenBiome == "underground" then powerus = RNG.randomInt(3,4) end
+		if chosenBiome == "underground" then powerus = RNG.randomInt(2,3) end
 		if chosenBiome == "bridge" then powerus = RNG.randomInt(1,2) end
 		if chosenBiome == "island" then powerus = RNG.randomInt(1,2) end
 		if chosenBiome == "water" then powerus = RNG.randomInt(0,1); end
-		if chosenBiome == "grass" then powerus = RNG.randomInt(1,4); end
+		if chosenBiome == "grass" then powerus = RNG.randomInt(1,3); end
 		local powersPlaced = 0
 		local length = 8
 		if chosenBiome == "castle" then length = 5 end
@@ -212,8 +212,26 @@ function levels.generate()
 		if chosenBiome == "bridge" then length = 8 end
 		if chosenBiome == "water" then length = 8 end
 		if chosenBiome == "grass" then length = 8 end
+		if powerus > 0 then
+			local chose = RNG.randomInt(1,tablelength(possiblePowers))
+			if tablelength(possiblePowers) > 0 then
+						local levelScript = possiblePowers[chose]
+						local sec = Section(0)
+						sec.boundary = addObjects(levelScript,sec,0,0)
+			end
+			length = length-1
+		end
+		powerus = powerus-1
 		for n=1,powerus+1 do
 			if powerus > 0 then
+				for a=1,math.floor(length/(powerus+1)) do
+					local chose = RNG.randomInt(1,tablelength(possibleMain))
+					if tablelength(possibleMain) > 0 then
+						local levelScript = possibleMain[chose]
+						local sec = Section(0)
+						sec.boundary = addObjects(levelScript,sec,0,0)
+					end
+				end
 				if powersPlaced < powerus then
 					powersPlaced = powersPlaced+1
 					local chose = RNG.randomInt(1,tablelength(possiblePowers))
@@ -223,16 +241,8 @@ function levels.generate()
 						sec.boundary = addObjects(levelScript,sec,0,0)
 					end
 				end
-				for a=1,math.floor(length/(powerus+1)) do
-					local chose = RNG.randomInt(1,tablelength(possibleMain))
-					if tablelength(possibleMain) > 0 then
-						local levelScript = possibleMain[chose]
-						local sec = Section(0)
-						sec.boundary = addObjects(levelScript,sec,0,0)
-					end
-				end
 			else
-				for a=1,length do
+				for a=1,length-1 do
 					local chose = RNG.randomInt(1,tablelength(possibleMain))
 					if tablelength(possibleMain) > 0 then
 							local levelScript = possibleMain[chose]
