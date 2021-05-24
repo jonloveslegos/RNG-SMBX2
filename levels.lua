@@ -129,7 +129,7 @@ local bgoCounter = 1
 local times = 0
 function addObjects(levelScript,sectn,yoff,xoff)
 	local bounds = sectn.boundary
-	times = times+20
+	times = times+30
 	local offSet = math.abs(sectn.boundary.left-sectn.boundary.right)+xoff
 	bounds.right = bounds.right+levelScript.width
 	for b=1,tablelength(levelScript.blocks) do
@@ -143,7 +143,8 @@ function addObjects(levelScript,sectn,yoff,xoff)
 			spawned.slippery = currBlock[9]
 	end
 	for b=1,tablelength(levelScript.npc) do
-			local currBlock = levelScript.npc[b]
+		local currBlock = levelScript.npc[b]
+		if currBlock[1] ~= 30 and currBlock[1] ~= 87 then
 			local spawned = NPC.spawn(currBlock[1],currBlock[2]+offSet,currBlock[3]+yoff,sectn.idx,true)
 			if currBlock[9] ~= nil then
 				spawned:mem(0xD8,FIELD_FLOAT,currBlock[9])
@@ -153,6 +154,7 @@ function addObjects(levelScript,sectn,yoff,xoff)
 				spawned:mem(0xDE,FIELD_WORD,currBlock[4])
 				spawned.ai1 = currBlock[4]
 			end
+		end
 	end
 	for b=1,tablelength(levelScript.bgo) do
 			if bgoCounter > tablelength(BGO.get()) then

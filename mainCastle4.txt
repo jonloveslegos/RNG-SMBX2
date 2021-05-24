@@ -1,6 +1,8 @@
 mainCastle4 = {}
+
+mainCastle4.water = false
 mainCastle4.width = 800
-mainCastle4.playerY = -200262
+mainCastle4.playerY = -200238
 mainCastle4.playerX = -199932
 mainCastle4.background = 41
 mainCastle4.music = 42
@@ -19,12 +21,12 @@ mainCastle4.npc = {
 -1,
 },
 {
-29,
--199424,
--200304,
--28,
-28,
-29.858756065369,
+89,
+-199680,
+-200320,
+0,
+0,
+0,
 0,
 0,
 -1,

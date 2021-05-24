@@ -1,6 +1,8 @@
 mainCastle2 = {}
+
+mainCastle2.water = false
 mainCastle2.width = 800
-mainCastle2.playerY = -200294
+mainCastle2.playerY = -200270
 mainCastle2.playerX = -199900
 mainCastle2.background = 41
 mainCastle2.music = 42
@@ -9,22 +11,11 @@ mainCastle2.bgo = {
 mainCastle2.npc = {
 {
 29,
--199584,
+-199616,
 -200240,
--19,
-19,
-21.749572753906,
 0,
-0,
--1,
-},
-{
-29,
--199648,
--200240,
--19,
-19,
-19.961580038071,
+17,
+16.881073355675,
 0,
 0,
 -1,

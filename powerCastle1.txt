@@ -1,6 +1,8 @@
 powerCastle1 = {}
+
+powerCastle1.water = false
 powerCastle1.width = 800
-powerCastle1.playerY = -200246
+powerCastle1.playerY = -200222
 powerCastle1.playerX = -199932
 powerCastle1.background = 41
 powerCastle1.music = 42
@@ -58,7 +60,7 @@ powerCastle1.npc = {
 0,
 0,
 0,
-2,
+1,
 1,
 1,
 },
@@ -1330,7 +1332,7 @@ false,
 false,
 },
 {
-396,
+400,
 -199648,
 -200096,
 32,
@@ -1341,7 +1343,7 @@ false,
 false,
 },
 {
-395,
+396,
 -199648,
 -200064,
 32,
@@ -1429,7 +1431,7 @@ false,
 false,
 },
 {
-387,
+630,
 -199616,
 -200096,
 32,
@@ -1440,7 +1442,7 @@ false,
 false,
 },
 {
-394,
+387,
 -199616,
 -200064,
 32,
@@ -1517,7 +1519,7 @@ false,
 false,
 },
 {
-402,
+400,
 -199584,
 -200096,
 32,
@@ -1528,7 +1530,7 @@ false,
 false,
 },
 {
-393,
+402,
 -199584,
 -200064,
 32,

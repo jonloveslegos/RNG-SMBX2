@@ -1,6 +1,8 @@
 powerCastle3 = {}
+
+powerCastle3.water = false
 powerCastle3.width = 800
-powerCastle3.playerY = -200246
+powerCastle3.playerY = -200222
 powerCastle3.playerX = -199948
 powerCastle3.background = 41
 powerCastle3.music = 42
@@ -11,9 +13,9 @@ powerCastle3.npc = {
 29,
 -199552,
 -200112,
--23,
-23,
-21.847503900528,
+0,
+21,
+21.516615509987,
 0,
 0,
 -1,
@@ -22,9 +24,9 @@ powerCastle3.npc = {
 29,
 -199680,
 -200112,
--23,
-23,
-21.522950172424,
+0,
+21,
+20.291873812675,
 0,
 0,
 -1,
