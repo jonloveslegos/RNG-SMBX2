@@ -45,6 +45,7 @@ local function stop_player(v)
 	
 	for i,p in ipairs(Player.get()) do
 		if (p.x + (p.width / 1.5)) > c.x then
+			p.x = p.x-p.speedX
 			p.speedX = 0
 		end
 	end

@@ -43,6 +43,7 @@ local MainCastleNames = {
 }
 local EndCastleNames = {
 "endCastle1",
+"endCastle2",
 }
 local BonusCastleNames = {
 }
@@ -63,6 +64,7 @@ local MainWaterNames = {
 }
 local EndWaterNames = {
 "endWater1",
+"endWater2",
 }
 local BonusWaterNames = {
 }
@@ -83,6 +85,7 @@ local MainUndergroundNames = {
 }
 local EndUndergroundNames = {
 "endGround1",
+"endGround2",
 }
 local BonusUndergroundNames = {
 "bonus1",
@@ -105,6 +108,7 @@ local MainIslandNames = {
 }
 local EndIslandNames = {
 "endIsland1",
+"endIsland2",
 }
 local BonusIslandNames = {
 }
@@ -222,8 +226,8 @@ function levels.generate()
 						sec.boundary = addObjects(levelScript,sec,0,0)
 			end
 			length = length-1
+			powerus = powerus-1
 		end
-		powerus = powerus-1
 		for n=1,powerus+1 do
 			if powerus > 0 then
 				for a=1,math.floor(length/(powerus+1)) do
