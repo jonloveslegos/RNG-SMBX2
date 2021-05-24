@@ -9,6 +9,7 @@ generateLevel = false
 local handycam = require("handycam")
 local npcManager = require("npcManager")
 endTimer = -100
+local playerWon = false
 local music = nil
 -- Run code on the first frame
 function onStart()
@@ -58,6 +59,16 @@ function onHUDDraw(camIdx)
     if Camera.get()[camIdx].height < 600 then offset = -40 end
     if player2 == nil then offset = -40 end
     Text.print(SaveData.worldCounter.."-"..SaveData.levelCounter,195-offset,45)
+end
+function onPlayerHarm(eventToken,harmedPlayer)
+    if playerWon == true then
+        eventToken.cancelled = true
+    end
+end
+function onPlayerKill(eventToken,harmedPlayer)
+    if playerWon == true then
+        eventToken.cancelled = true
+    end
 end
 -- Run code every frame (~1/65 second)
 -- (code will be executed before game logic will be processed)
@@ -151,6 +162,7 @@ end
 function onExitLevel(win)
     if win > 0 then 
         SaveData.levelCounter = SaveData.levelCounter+1
+        playerWon = true
         if SaveData.levelCounter > 4 then 
             SaveData.levelCounter = 1 
             SaveData.worldCounter = SaveData.worldCounter+1 
