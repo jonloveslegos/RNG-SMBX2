@@ -5,8 +5,8 @@
    ["__launcher"]={3},
    ["_basegame"]={4},
    ["__costumes"]={5},
-   ["worldCounter"]=2,
-   ["levelCounter"]=2
+   ["worldCounter"]=3,
+   ["levelCounter"]=3
 },
 --[2]--
 {
@@ -52,7 +52,7 @@
 },
 --[9]--
 {
-   ["score"]=81830
+   ["score"]=138280
 },
 --[10]--
 {

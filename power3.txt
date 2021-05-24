@@ -1,6 +1,8 @@
 power3 = {}
+
+power3.water = false
 power3.width = 800
-power3.playerY = -200118
+power3.playerY = -200094
 power3.playerX = -199596
 power3.background = 10
 power3.music = 9
@@ -173,7 +175,7 @@ false,
 -200320,
 32,
 32,
-1293,
+10,
 false,
 false,
 false,
