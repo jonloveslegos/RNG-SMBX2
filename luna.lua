@@ -173,6 +173,7 @@ function onNPCKill(eventToken,killedNPC,harmType)
     if killedNPC.id == 178 and harmType == HARM_TYPE_VANISH and tablelength(Player.getIntersecting(killedNPC.x,killedNPC.y,killedNPC.x+killedNPC.width,killedNPC.y+killedNPC.height)) > 0 then
         Audio.MusicStop();
 		Audio.SeizeStream(-1);
+        playerWon = true
         if SaveData.worldCounter < 8 then
             SFX.play("110 World Clear.mp3")
             if music ~= nil then music:stop() end
