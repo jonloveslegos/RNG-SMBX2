@@ -101,6 +101,12 @@ local MainUndergroundNames = {
 "mainGround2",
 "mainGround3",
 "mainGround4",
+"mainGround5",
+"mainGround6",
+"mainGround7",
+"mainGround8",
+"mainGround9",
+"mainGround10",
 }
 local EndUndergroundNames = {
 "endGround1",
@@ -125,6 +131,9 @@ local MainIslandNames = {
 "mainIsland2",
 "mainIsland3",
 "mainIsland4",
+"mainIsland5",
+"mainIsland6",
+"mainIsland7",
 }
 local EndIslandNames = {
 "endIsland1",
@@ -310,7 +319,7 @@ function levels.generate()
 			local levelScript = possibleBonus[chose]
 			table.remove(possibleBonus,chose)
 			if tablelength(possibleBonus) <= 0 then
-				makeMainTable()
+				makeBonusTable()
 			end
 			sec.backgroundID = levelScript.background
 			sec.musicID = levelScript.music
@@ -364,7 +373,7 @@ function levels.generate()
 			local levelScript = possibleBonus[chose]
 			table.remove(possibleBonus,chose)
 			if tablelength(possibleBonus) <= 0 then
-				makeMainTable()
+				makeBonusTable()
 			end
 			sec.backgroundID = levelScript.background
 			sec.musicID = levelScript.music
