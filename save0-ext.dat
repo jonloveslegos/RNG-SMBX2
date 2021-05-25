@@ -2,13 +2,14 @@
 --[1]--
 {
    ["savedGeneration"]={2},
-   ["__progress"]=17,
    ["__launcher"]={3},
-   ["_basegame"]={4},
+   ["__costumes"]={4},
+   ["worldCounter"]=1,
+   ["__progress"]=22,
    ["levelCounter"]=1,
-   ["__costumes"]={5},
-   ["totalWins"]=17,
-   ["worldCounter"]=1
+   ["_basegame"]={5},
+   ["lastCreated"]={6},
+   ["totalWins"]=22
 },
 --[2]--
 {
@@ -20,15 +21,15 @@
 },
 --[4]--
 {
-   ["bigSwitch"]={6},
-   ["_characterdata"]={7},
-   ["starcoinCounter"]=0,
-   ["hud"]={8},
-   ["starcoin"]={9}
+
 },
 --[5]--
 {
-
+   ["bigSwitch"]={7},
+   ["_characterdata"]={8},
+   ["starcoinCounter"]=0,
+   ["hud"]={9},
+   ["starcoin"]={10}
 },
 --[6]--
 {
@@ -36,43 +37,39 @@
 },
 --[7]--
 {
-   ["8"]={10},
-   ["10"]={11},
-   ["9"]={12},
-   ["6"]={13},
-   ["16"]={14},
-   ["11"]={15},
-   ["12"]={16},
-   ["7"]={17},
-   ["15"]={18},
-   ["13"]={19},
-   ["14"]={20}
+
 },
 --[8]--
 {
-   ["score"]=578140
+   ["8"]={11},
+   ["10"]={12},
+   ["9"]={13},
+   ["6"]={14},
+   ["16"]={15},
+   ["11"]={16},
+   ["12"]={17},
+   ["7"]={18},
+   ["15"]={19},
+   ["13"]={20},
+   ["14"]={21}
 },
 --[9]--
 {
-   ["powerGround1.lvlx"]={21},
-   ["startCastle1.lvlx"]={22},
-   ["bonus1.lvlx"]={23},
-   ["bonus2.lvlx"]={24},
-   ["endCastle1.lvlx"]={25},
-   ["startGround1.lvlx"]={26},
-   ["end2.lvlx"]={27},
-   ["levelGenRoom.lvlx"]={28},
-   ["mainGround1.lvlx"]={29},
-   ["endGround2.lvlx"]={30},
-   ["endCastle2.lvlx"]={31}
+   ["score"]=623690
 },
 --[10]--
 {
-   ["reservePowerup"]=0,
-   ["0x10A"]=0,
-   ["powerup"]=1,
-   ["0x16"]=1,
-   ["0x108"]=0
+   ["powerGround1.lvlx"]={22},
+   ["startCastle1.lvlx"]={23},
+   ["bonus1.lvlx"]={24},
+   ["bonus2.lvlx"]={25},
+   ["endCastle1.lvlx"]={26},
+   ["startGround1.lvlx"]={27},
+   ["end2.lvlx"]={28},
+   ["levelGenRoom.lvlx"]={29},
+   ["mainGround1.lvlx"]={30},
+   ["endGround2.lvlx"]={31},
+   ["endCastle2.lvlx"]={32}
 },
 --[11]--
 {
@@ -156,8 +153,11 @@
 },
 --[21]--
 {
-   ["maxID"]=0,
-   ["alive"]={32}
+   ["reservePowerup"]=0,
+   ["0x10A"]=0,
+   ["powerup"]=1,
+   ["0x16"]=1,
+   ["0x108"]=0
 },
 --[22]--
 {
@@ -211,7 +211,8 @@
 },
 --[32]--
 {
-
+   ["maxID"]=0,
+   ["alive"]={43}
 },
 --[33]--
 {
@@ -250,6 +251,10 @@
 
 },
 --[42]--
+{
+
+},
+--[43]--
 {
 
 }

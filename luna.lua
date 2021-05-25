@@ -10,6 +10,7 @@ local musFake = false
 local musReal = false
 local playing = -1
 local musSect = 0
+SaveData.lastCreated = SaveData.lastCreated or {}
 local antiZip = require("antizip")
 local antiZipP2 = require("antizipP2")
 local handycam = require("handycam")
@@ -137,7 +138,7 @@ function onTick()
     end
     hudoverride.visible.itembox = false
     if generateLevel == true then
-        levelMaker:onTickMake(levelType)
+        levelMaker:onTickMake(false)
         generateLevel = false
     end
     endTimer = endTimer-1
@@ -146,6 +147,9 @@ function onTick()
             SaveData.worldCounter = 1
             SaveData.levelCounter = 1
             SaveData.totalWins=SaveData.totalWins+1
+            local dataFile = io.open(Misc.episodePath().."LastLevelSave"..Misc.saveSlot()..".txt", "w+" )
+            dataFile:write("null")
+            dataFile:close()
             Level.finish(5,true)
         else
             Level.finish(2,false)
@@ -235,6 +239,9 @@ function onExitLevel(win)
             SaveData.worldCounter = SaveData.worldCounter+1 
         end
         SaveData.totalWins=SaveData.totalWins+1
+        local dataFile = io.open(Misc.episodePath().."LastLevelSave"..Misc.saveSlot()..".txt", "w+" )
+        dataFile:write("null")
+        dataFile:close()
     end
 end
 function onNPCKill(eventToken,killedNPC,harmType)
