@@ -18,6 +18,12 @@ local MainGrassNames = {
 "main2",
 "main3",
 "main4",
+"main5",
+"main6",
+"main7",
+"main8",
+"main9",
+"main10",
 }
 local EndGrassNames = {
 "end1",
@@ -42,6 +48,9 @@ local MainCastleNames = {
 "mainCastle2",
 "mainCastle3",
 "mainCastle4",
+"mainCastle5",
+"mainCastle6",
+"mainCastle7",
 }
 local EndCastleNames = {
 "endCastle1",
@@ -64,6 +73,12 @@ local MainWaterNames = {
 "mainWater2",
 "mainWater3",
 "mainWater4",
+"mainWater5",
+"mainWater6",
+"mainWater7",
+"mainWater8",
+"mainWater9",
+"mainWater10",
 }
 local EndWaterNames = {
 "endWater1",
@@ -230,17 +245,21 @@ function levels.generate()
 						local sec = Section(0)
 						sec.boundary = addObjects(levelScript,sec,0,0)
 			end
+			powersPlaced = powersPlaced+1
 			length = length-1
-			powerus = powerus-1
 		end
 		for n=1,powerus+1 do
 			if powerus > 0 then
-				for a=1,math.floor(length/(powerus+1)) do
+				for a=1,math.ceil(length/(powerus+1)) do
 					local chose = RNG.randomInt(1,tablelength(possibleMain))
 					if tablelength(possibleMain) > 0 then
 						local levelScript = possibleMain[chose]
 						local sec = Section(0)
 						sec.boundary = addObjects(levelScript,sec,0,0)
+						table.remove(possibleMain,chose)
+						if tablelength(possibleMain) <= 0 then
+							makeMainTable()
+						end
 					end
 				end
 				if powersPlaced < powerus then
@@ -250,6 +269,10 @@ function levels.generate()
 						local levelScript = possiblePowers[chose]
 						local sec = Section(0)
 						sec.boundary = addObjects(levelScript,sec,0,0)
+						table.remove(possiblePowers,chose)
+						if tablelength(possiblePowers) <= 0 then
+							makePowerTable()
+						end
 					end
 				end
 			else
@@ -259,6 +282,10 @@ function levels.generate()
 							local levelScript = possibleMain[chose]
 							local sec = Section(0)
 							sec.boundary = addObjects(levelScript,sec,0,0)
+							table.remove(possibleMain,chose)
+							if tablelength(possibleMain) <= 0 then
+								makeMainTable()
+							end
 					end
 				end
 			end
@@ -281,6 +308,10 @@ function levels.generate()
 			warp.entranceY = blockChose.y-32
 			chose = RNG.randomInt(1,tablelength(possibleBonus))
 			local levelScript = possibleBonus[chose]
+			table.remove(possibleBonus,chose)
+			if tablelength(possibleBonus) <= 0 then
+				makeMainTable()
+			end
 			sec.backgroundID = levelScript.background
 			sec.musicID = levelScript.music
 			if levelScript.water ~= nil then
@@ -301,7 +332,7 @@ function levels.generate()
 				warp = Warp.get()[2]
 				warp.entranceX = blockChose.x-32
 				warp.entranceY = blockChose.y+32
-				chose = startChose
+				chose = RNG.randomInt(1,tablelength(Block.get(376)))
 				blockChose = Block.get(196)[chose]
 				for p=1,50 do
 					chose = chose+1
@@ -331,6 +362,10 @@ function levels.generate()
 			warp.entranceY = blockChose.y-32
 			chose = RNG.randomInt(1,tablelength(possibleBonus))
 			local levelScript = possibleBonus[chose]
+			table.remove(possibleBonus,chose)
+			if tablelength(possibleBonus) <= 0 then
+				makeMainTable()
+			end
 			sec.backgroundID = levelScript.background
 			sec.musicID = levelScript.music
 			sec.boundary = addObjects(levelScript,sec,40000,40000)
@@ -348,7 +383,7 @@ function levels.generate()
 				warp = Warp.get()[4]
 				warp.entranceX = blockChose.x-32+20000
 				warp.entranceY = blockChose.y+32+20000
-				chose = startChose
+				chose = RNG.randomInt(1,tablelength(Block.get(376)))
 				blockChose = Block.get(196)[chose]
 				for p=1,50 do
 					chose = chose+1
@@ -386,7 +421,7 @@ function levels.generate()
 				blcks[chose].contentID = 1293
 			end
 		end
-		for i=1,RNG.randomInt(1,3) do
+		for i=1,RNG.randomInt(1,2) do
 			local blocks = Block.get(188)
 			local complete = false
 			local blcks = {}
@@ -446,6 +481,14 @@ function levels.loadLevels()
 	if chosenBiome == "island" then PowerNames = PowerIslandNames end
 	if chosenBiome == "island" then EndNames = EndIslandNames end
 	if chosenBiome == "island" then BonusNames = BonusIslandNames end
+	makeStartTable()
+	makePowerTable()
+	makeMainTable()
+	makeEndTable()
+	makeBonusTable()
+end
+
+function makeStartTable()
 	possibleStarts = {}
 	if Level.filename() == "levelGenRoom.lvlx" then
 		if tablelength(StartNames) > 0 then
@@ -455,6 +498,9 @@ function levels.loadLevels()
 			end
 		end
 	end
+end
+
+function makePowerTable()
 	possiblePowers = {}
 	if Level.filename() == "levelGenRoom.lvlx" then
 		if tablelength(PowerNames) > 0 then
@@ -464,15 +510,9 @@ function levels.loadLevels()
 			end
 		end
 	end
-	possibleMain = {}
-	if Level.filename() == "levelGenRoom.lvlx" then
-		if tablelength(MainNames) > 0 then
-			for i=1,tablelength(MainNames) do
-				local dataFile = io.open(Misc.episodePath()..MainNames[i]..".txt", "r" )
-				possibleMain[i] = require(Misc.episodePath()..MainNames[i]..".txt")
-			end
-		end
-	end
+end
+
+function makeEndTable()
 	possibleEnd = {}
 	if Level.filename() == "levelGenRoom.lvlx" then
 		if tablelength(EndNames) > 0 then
@@ -482,12 +522,27 @@ function levels.loadLevels()
 			end
 		end
 	end
+end
+
+function makeBonusTable()
 	possibleBonus = {}
 	if Level.filename() == "levelGenRoom.lvlx" then
 		if tablelength(BonusNames) > 0 then
 			for i=1,tablelength(BonusNames) do
 				local dataFile = io.open(Misc.episodePath()..BonusNames[i]..".txt", "r" )
 				possibleBonus[i] = require(Misc.episodePath()..BonusNames[i]..".txt")
+			end
+		end
+	end
+end
+
+function makeMainTable()
+	possibleMain = {}
+	if Level.filename() == "levelGenRoom.lvlx" then
+		if tablelength(MainNames) > 0 then
+			for i=1,tablelength(MainNames) do
+				local dataFile = io.open(Misc.episodePath()..MainNames[i]..".txt", "r" )
+				possibleMain[i] = require(Misc.episodePath()..MainNames[i]..".txt")
 			end
 		end
 	end

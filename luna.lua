@@ -12,8 +12,9 @@ local handycam = require("handycam")
 local npcManager = require("npcManager")
 endTimer = -100
 SaveData.totalWins = SaveData.totalWins or 0
-local playerWon = false
+GameData.playerWon = false
 local music = nil
+local wonPlayer = player
 -- Run code on the first frame
 function onStart()
     levelMaker:onStartMake()
@@ -82,12 +83,12 @@ function onHUDDraw(camIdx)
     Text.print(SaveData.worldCounter.."-"..SaveData.levelCounter,195-offset,45)
 end
 function onPlayerHarm(eventToken,harmedPlayer)
-    if playerWon == true then
+    if GameData.playerWon == true then
         eventToken.cancelled = true
     end
 end
 function onPlayerKill(eventToken,harmedPlayer)
-    if playerWon == true then
+    if GameData.playerWon == true then
         eventToken.cancelled = true
     end
 end
@@ -100,6 +101,17 @@ function onTick()
         if NPC.get()[i]:mem(0x138,FIELD_WORD) == 1 then
             NPC.get()[i].direction = 1
         end
+    end
+    if GameData.playerWon == true then
+        for n=1,Player.count() do
+				local v = Player(n)
+				if Player(n) ~= wonPlayer then
+					v.x = v.x - v.speedX
+					v.speedX = 0
+					v.y = v.y - v.speedY
+					v.speedY = 0
+				end
+		end
     end
     if player.mount == MOUNT_NONE then
         player:mem(0x120,FIELD_BOOL,false)
@@ -181,7 +193,7 @@ end
 function onExitLevel(win)
     if win > 0 then 
         SaveData.levelCounter = SaveData.levelCounter+1
-        playerWon = true
+        GameData.playerWon = true
         if SaveData.levelCounter > 4 then 
             SaveData.levelCounter = 1 
             SaveData.worldCounter = SaveData.worldCounter+1 
@@ -193,7 +205,8 @@ function onNPCKill(eventToken,killedNPC,harmType)
     if killedNPC.id == 178 and harmType == HARM_TYPE_VANISH and tablelength(Player.getIntersecting(killedNPC.x,killedNPC.y,killedNPC.x+killedNPC.width,killedNPC.y+killedNPC.height)) > 0 then
         Audio.MusicStop();
 		Audio.SeizeStream(-1);
-        playerWon = true
+        GameData.playerWon = true
+        wonPlayer = Player.getIntersecting(killedNPC.x,killedNPC.y,killedNPC.x+killedNPC.width,killedNPC.y+killedNPC.height)[1]
         if SaveData.worldCounter < 8 then
             SFX.play("110 World Clear.mp3")
             if music ~= nil then music:stop() end

@@ -2,10 +2,10 @@
 --[1]--
 {
    ["savedGeneration"]={2},
-   ["__progress"]=2,
+   ["__progress"]=34,
    ["__launcher"]={3},
    ["_basegame"]={4},
-   ["totalWins"]=2,
+   ["totalWins"]=34,
    ["__costumes"]={5},
    ["worldCounter"]=1,
    ["levelCounter"]=3
