@@ -87,7 +87,7 @@ function onPlayerHarm(eventToken,harmedPlayer)
     end
 end
 function onPlayerKill(eventToken,harmedPlayer)
-    if playerWon == true then
+    if playerWon == true or NPC.get(751)[1].data.animating == true then
         eventToken.cancelled = true
     end
 end

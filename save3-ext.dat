@@ -5,10 +5,10 @@
    ["__progress"]=0,
    ["__launcher"]={3},
    ["_basegame"]={4},
-   ["totalWins"]=0,
-   ["__costumes"]={5},
    ["worldCounter"]=1,
-   ["levelCounter"]=1
+   ["__costumes"]={5},
+   ["totalWins"]=1,
+   ["levelCounter"]=2
 },
 --[2]--
 {
@@ -54,7 +54,7 @@
 },
 --[9]--
 {
-   ["score"]=1350
+   ["score"]=13590
 },
 --[10]--
 {

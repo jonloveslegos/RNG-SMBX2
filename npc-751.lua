@@ -156,9 +156,34 @@ local function player_collided(v)
 		end
 	end
 end
+function tablelength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
+end
+function onInputUpdate()
+	for e=1,tablelength(flagpoleNPC) do
+		local v = flagpoleNPC[e]
+		local data = v.data
+		if data.timer ~= nil then
+			if data.timer >= 25 then
+					for i = 1, Player.count() do 
+						local v = Player(i)
+						v.keys.right = true
+						v.keys.left = false
+						v.keys.down = false
+						v.keys.up = false
+						v.keys.jump = false
+						v.keys.run = false
+						v.keys.altJump = false
+						v.keys.altRun = false
+					end
+			end
+		end
+	end
+end
 
 function flagpoleNPC.onTickEndNPC(v)
-	if Defines.levelFreeze then return end
 	
 	local data = v.data
 	
@@ -166,7 +191,7 @@ function flagpoleNPC.onTickEndNPC(v)
 		data.initialized = false
 		return
 	end
-
+	data.animating = data.animating or false
 	if not data.initialized then
 		data.player = nil
 		data.collided = false
@@ -215,9 +240,8 @@ function flagpoleNPC.onTickEndNPC(v)
 		mem(0xB2C5A0, FIELD_WORD, 0)
 	elseif data.player ~= nil and data.collided == true then
 		data.timer = data.timer + 1
-		
+		data.animating = true
 		if data.timer ~= 0 then
-			Level.winState(1)
 			mem(0xB2C5A0, FIELD_WORD, 0)
 		end
 		
@@ -247,6 +271,7 @@ function flagpoleNPC.onTickEndNPC(v)
 						end
 					end
 				end
+				v.speedX = Defines.player_walkspeed
 			end
 		end
 		
