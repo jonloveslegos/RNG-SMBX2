@@ -13,6 +13,7 @@ local npcManager = require("npcManager")
 endTimer = -100
 SaveData.totalWins = SaveData.totalWins or 0
 GameData.playerWon = false
+Debug = false
 local music = nil
 local wonPlayer = player
 -- Run code on the first frame
@@ -49,31 +50,33 @@ function onInputUpdate()
     end
 end
 
---[[function onDraw()
-    local imge = Graphics.loadImage("background-752.png")
-    for i=1,tablelength(Warp.get()) do
-        Graphics.drawBox{x=Warp.get()[i].entranceX,y=Warp.get()[i].entranceY,w=32,h=16,sceneCoords=true,color=Color.green}
-        Graphics.drawBox{x=Warp.get()[i].exitX,y=Warp.get()[i].exitY+16,w=32,h=16,sceneCoords=true,color=Color.red}
+function onDraw()
+    if Debug == true then
+        local imge = Graphics.loadImage("background-752.png")
+        for i=1,tablelength(Warp.get()) do
+            Graphics.drawBox{x=Warp.get()[i].entranceX,y=Warp.get()[i].entranceY,w=32,h=16,sceneCoords=true,color=Color.green}
+            Graphics.drawBox{x=Warp.get()[i].exitX,y=Warp.get()[i].exitY+16,w=32,h=16,sceneCoords=true,color=Color.red}
+        end
+        local blocks = Block.get(188)
+        for i=1,tablelength(blocks) do
+            if blocks[i].contentID == 1186 then
+                Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.green}
+            end
+            if blocks[i].contentID == 1293 then
+                Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.yellow}
+            end
+        end
+        local blocks = Block.get(60)
+        for i=1,tablelength(blocks) do
+            if blocks[i].contentID == 1186 then
+                Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.green}
+            end
+            if blocks[i].contentID == 1293 then
+                Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.yellow}
+            end
+        end
     end
-    local blocks = Block.get(188)
-    for i=1,tablelength(blocks) do
-        if blocks[i].contentID == 1186 then
-            Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.green}
-        end
-        if blocks[i].contentID == 1293 then
-            Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.yellow}
-        end
-    end
-    local blocks = Block.get(60)
-    for i=1,tablelength(blocks) do
-        if blocks[i].contentID == 1186 then
-            Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.green}
-        end
-        if blocks[i].contentID == 1293 then
-            Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.yellow}
-        end
-    end
-end]]
+end
 
 function onHUDDraw(camIdx)
     local offset = 0

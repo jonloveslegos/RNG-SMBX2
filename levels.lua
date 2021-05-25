@@ -51,6 +51,9 @@ local MainCastleNames = {
 "mainCastle5",
 "mainCastle6",
 "mainCastle7",
+"mainCastle8",
+"mainCastle9",
+"mainCastle10",
 }
 local EndCastleNames = {
 "endCastle1",
@@ -134,6 +137,9 @@ local MainIslandNames = {
 "mainIsland5",
 "mainIsland6",
 "mainIsland7",
+"mainIsland8",
+"mainIsland9",
+"mainIsland10",
 }
 local EndIslandNames = {
 "endIsland1",
@@ -341,7 +347,7 @@ function levels.generate()
 				warp = Warp.get()[2]
 				warp.entranceX = blockChose.x-32
 				warp.entranceY = blockChose.y+32
-				chose = RNG.randomInt(1,tablelength(Block.get(376)))
+				chose = RNG.randomInt(1,tablelength(Block.get(196)))
 				blockChose = Block.get(196)[chose]
 				for p=1,50 do
 					chose = chose+1
@@ -353,15 +359,15 @@ function levels.generate()
 				warp.exitY = blockChose.y-32
 			end
 		end
-		if tablelength(Block.get(196)) > 2 and tablelength(possibleBonus) > 0 then
+		if tablelength(Block.get(196)) > 1 and tablelength(possibleBonus) > 0 then
 			local chose = RNG.randomInt(1,tablelength(Block.get(196)))
 			local blockChose = Block.get(196)[chose]
-			local startChose = chose
 			for p=1,50 do
 					chose = RNG.randomInt(1,tablelength(Block.get(196)))
 					blockChose = Block.get(196)[chose]
 					if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
 			end
+			local startChose = chose
 			local warp = Warp.get()[3]
 			local sec = Section(2)
 			local bounds = sec.boundary
@@ -392,7 +398,7 @@ function levels.generate()
 				warp = Warp.get()[4]
 				warp.entranceX = blockChose.x-32+20000
 				warp.entranceY = blockChose.y+32+20000
-				chose = RNG.randomInt(1,tablelength(Block.get(376)))
+				chose = RNG.randomInt(1,tablelength(Block.get(196)))
 				blockChose = Block.get(196)[chose]
 				for p=1,50 do
 					chose = chose+1
