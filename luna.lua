@@ -48,7 +48,7 @@ function onInputUpdate()
     end
 end
 
-function onDraw()
+--[[function onDraw()
     local imge = Graphics.loadImage("background-752.png")
     for i=1,tablelength(Warp.get()) do
         Graphics.drawBox{x=Warp.get()[i].entranceX,y=Warp.get()[i].entranceY,w=32,h=16,sceneCoords=true,color=Color.green}
@@ -72,7 +72,7 @@ function onDraw()
             Graphics.drawBox{x=blocks[i].x+8,y=blocks[i].y+8,w=16,h=16,sceneCoords=true,color=Color.yellow}
         end
     end
-end
+end]]
 
 function onHUDDraw(camIdx)
     local offset = 0
