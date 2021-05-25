@@ -2,13 +2,13 @@
 --[1]--
 {
    ["savedGeneration"]={2},
-   ["__progress"]=32,
+   ["__progress"]=2,
    ["__launcher"]={3},
    ["_basegame"]={4},
-   ["totalWins"]=32,
+   ["totalWins"]=2,
    ["__costumes"]={5},
    ["worldCounter"]=1,
-   ["levelCounter"]=1
+   ["levelCounter"]=3
 },
 --[2]--
 {
@@ -54,7 +54,7 @@
 },
 --[9]--
 {
-   ["score"]=376680
+   ["score"]=38580
 },
 --[10]--
 {
