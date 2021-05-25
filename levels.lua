@@ -6,6 +6,7 @@ local EndNames = {}
 local BonusNames = {}
 local StartGrassNames = {
 "start1",
+"start2",
 }
 local PowerGrassNames = {
 "power1",
@@ -29,6 +30,7 @@ local BonusGrassNames = {
 
 local StartCastleNames = {
 "startCastle1",
+"startCastle2",
 }
 local PowerCastleNames = {
 "powerCastle1",
@@ -50,6 +52,7 @@ local BonusCastleNames = {
 
 local StartWaterNames = {
 "startWater1",
+"startWater2",
 }
 local PowerWaterNames = {
 "powerWater1",
@@ -71,6 +74,7 @@ local BonusWaterNames = {
 
 local StartUndergroundNames = {
 "startGround1",
+"startGround2",
 }
 local PowerUndergroundNames = {
 "powerGround1",
@@ -94,6 +98,7 @@ local BonusUndergroundNames = {
 
 local StartIslandNames = {
 "startIsland1",
+"startIsland2",
 }
 local PowerIslandNames = {
 "powerIsland1",
