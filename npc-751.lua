@@ -220,7 +220,9 @@ function flagpoleNPC.onTickEndNPC(v)
 	if flagpoleNPC.stopPlayer then
 		stop_player(v)
 	end
-	
+	if data.player ~= nil then
+		GameData.wonPlayer = data.player.idx
+	end
 	if data.player ~= nil and data.collided == false then
 		data.col_y = v.y + (v.height / 3)
 		data.col_h = data.col_y + v.height
@@ -228,15 +230,7 @@ function flagpoleNPC.onTickEndNPC(v)
 		stick(data.player.idx, v)
 		
 		v.speedY = 4
-		for n=1,Player.count() do
-				local v = Player(n)
-				if Player(n) ~= data.player then
-					v.x = v.x - v.speedX
-					v.speedX = 0
-					v.y = v.y - v.speedY
-					v.speedY = 0
-				end
-		end
+		
 		GameData.playerWon = true
 		for k,b in ipairs(Block.getIntersecting(v.x, data.col_y, v.x + v.width, data.col_h)) do
 			if Block.config[b.id].passthrough == false then
@@ -254,15 +248,7 @@ function flagpoleNPC.onTickEndNPC(v)
 			mem(0xB2C5A0, FIELD_WORD, 0)
 		end
 		
-		for n=1,Player.count() do
-				local v = Player(n)
-				if Player(n) ~= data.player then
-					v.x = v.x - v.speedX
-					v.speedX = 0
-					v.y = v.y - v.speedY
-					v.speedY = 0
-				end
-		end
+		
 		if data.timer < 25 then
 			stick(data.player.idx, v)
 			v.speedY = 0
@@ -290,11 +276,6 @@ function flagpoleNPC.onTickEndNPC(v)
 				end
 				if v == data.player then
 					v.speedX = Defines.player_walkspeed
-				else
-					v.x = v.x - v.speedX
-					v.speedX = 0
-					v.y = v.y - v.speedY
-					v.speedY = 0
 				end
 			end
 		end

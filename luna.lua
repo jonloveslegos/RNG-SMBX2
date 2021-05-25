@@ -6,6 +6,10 @@ local hudoverride = require("hudoverride")
 levelMaker = require("levelMaker")
 levels = require("levels")
 generateLevel = false
+local musFake = false
+local musReal = false
+local playing = -1
+local musSect = 0
 local antiZip = require("antizip")
 local antiZipP2 = require("antizipP2")
 local handycam = require("handycam")
@@ -15,6 +19,7 @@ SaveData.totalWins = SaveData.totalWins or 0
 GameData.playerWon = false
 Debug = false
 local music = nil
+GameData.wonPlayer = -1
 local wonPlayer = player
 -- Run code on the first frame
 function onStart()
@@ -105,6 +110,10 @@ function onTick()
             NPC.get()[i].direction = 1
         end
     end
+    if GameData.wonPlayer ~= -1 then 
+        wonPlayer = Player(GameData.wonPlayer)
+        GameData.wonPlayer = -1
+    end
     if GameData.playerWon == true then
         for n=1,Player.count() do
 				local v = Player(n)
@@ -143,22 +152,46 @@ function onTick()
         end
         endTimer = -100
     end
+    if musFake == true and playing ~= -1 then
+        if playing:isplaying() == false then
+            playing = -1
+            Audio.MusicChange(musSect, "fakeLoop.mp3")
+        end
+    end
+    if musReal == true and playing ~= -1 then
+        if playing:isplaying() == false then
+            playing = -1
+            Audio.MusicChange(musSect, "realLoop.mp3")
+        end
+    end
     local npcs = NPC.getIntersecting(camera.x, camera.y, camera.x+camera.width, camera.y+camera.height)
     for i=1,tablelength(npcs) do
         if npcs[i].id == 200 then
             if npcs[i].x < player.x+camera.width then
-                if SaveData.worldCounter >= 8 then
-                    Audio.MusicChange(player.section, "109 Last Battle.mp3")
-                else
-                    Audio.MusicChange(player.section, "107 King Bowser.mp3")
+                if SaveData.worldCounter >= 8 and musReal == false then
+                    Audio.MusicChange(player.section, 0)
+                    playing = SFX.play("RealStart.mp3",0.4)
+                    musSect = player.section
+                    musReal = true
+                elseif SaveData.worldCounter < 8 and musFake == false then
+                    Audio.MusicChange(player.section, 0)
+                    playing = SFX.play("FakeStart.mp3",0.4)
+                    musSect = player.section
+                    musFake = true
                 end
                 break
             elseif camera2 ~= nil and player2 ~= nil then
                 if npcs[i].x < player2.x+camera2.width then
-                    if SaveData.worldCounter >= 8 then
-                        Audio.MusicChange(player2.section, "109 Last Battle.mp3")
-                    else
-                        Audio.MusicChange(player2.section, "107 King Bowser.mp3")
+                    if SaveData.worldCounter >= 8 and musReal == false then
+                        Audio.MusicChange(player2.section, 0)
+                        playing = SFX.play("RealStart.mp3",0.4)
+                        musSect = player2.section
+                        musReal = true
+                    elseif SaveData.worldCounter < 8 and musFake == false then
+                        Audio.MusicChange(player2.section, 0)
+                        playing = SFX.play("FakeStart.mp3",0.4)
+                        musSect = player2.section
+                        musFake = true
                     end
                     break
                 end

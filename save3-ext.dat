@@ -2,13 +2,13 @@
 --[1]--
 {
    ["savedGeneration"]={2},
-   ["__progress"]=9,
+   ["__progress"]=11,
    ["__launcher"]={3},
    ["_basegame"]={4},
-   ["worldCounter"]=3,
+   ["levelCounter"]=4,
    ["__costumes"]={5},
-   ["totalWins"]=9,
-   ["levelCounter"]=2
+   ["worldCounter"]=3,
+   ["totalWins"]=11
 },
 --[2]--
 {
@@ -22,9 +22,9 @@
 {
    ["bigSwitch"]={6},
    ["_characterdata"]={7},
-   ["starcoin"]={8},
-   ["hud"]={9},
-   ["starcoinCounter"]=0
+   ["starcoinCounter"]=0,
+   ["hud"]={8},
+   ["starcoin"]={9}
 },
 --[5]--
 {
@@ -50,11 +50,11 @@
 },
 --[8]--
 {
-   ["levelGenRoom.lvlx"]={21}
+   ["score"]=143770
 },
 --[9]--
 {
-   ["score"]=115210
+   ["levelGenRoom.lvlx"]={21}
 },
 --[10]--
 {
