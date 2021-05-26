@@ -5,6 +5,7 @@
 local hudoverride = require("hudoverride")
 levelMaker = require("levelMaker")
 levels = require("levels")
+config = require("CONFIG")
 generateLevel = false
 local musFake = false
 local setup = false
@@ -103,6 +104,7 @@ end
 -- (code will be executed before game logic will be processed)
 function onTick()
     if setup == false then
+        config:addLevels()
         levelMaker:onStartMake()
         levels:loadLevels()
         levels:generate()

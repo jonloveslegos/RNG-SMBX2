@@ -163,6 +163,42 @@ SaveData.levelCounter = SaveData.levelCounter or 1
 SaveData.worldCounter = SaveData.worldCounter or 1
 local bgoCounter = 1
 local times = 0
+function levels.AddToLevels(type,biome,fileName)
+	if biome == "grass" then
+		if type == "start" then table.insert(StartGrassNames,fileName) end
+		if type == "end" then table.insert(EndGrassNames,fileName) end
+		if type == "filler" then table.insert(MainGrassNames,fileName) end
+		if type == "powerup" then table.insert(PowerGrassNames,fileName) end
+	end
+	if biome == "water" then
+		if type == "start" then table.insert(StartWaterNames,fileName) end
+		if type == "end" then table.insert(EndWaterNames,fileName) end
+		if type == "filler" then table.insert(MainWaterNames,fileName) end
+		if type == "powerup" then table.insert(PowerWaterNames,fileName) end
+	end
+	if biome == "underground" then
+		if type == "start" then table.insert(StartUndergroundNames,fileName) end
+		if type == "end" then table.insert(EndUndergroundNames,fileName) end
+		if type == "filler" then table.insert(MainUndergroundNames,fileName) end
+		if type == "powerup" then table.insert(PowerUndergroundNames,fileName) end
+	end
+	if biome == "island" then
+		if type == "start" then table.insert(StartIslandNames,fileName) end
+		if type == "end" then table.insert(EndIslandNames,fileName) end
+		if type == "filler" then table.insert(MainIslandNames,fileName) end
+		if type == "powerup" then table.insert(PowerIslandNames,fileName) end
+	end
+	if biome == "castle" then
+		if type == "start" then table.insert(StartCastleNames,fileName) end
+		if type == "end" then table.insert(EndCastleNames,fileName) end
+		if type == "filler" then table.insert(MainCastleNames,fileName) end
+		if type == "powerup" then table.insert(PowerCastleNames,fileName) end
+	end
+	if biome == "bonus" then
+		table.insert(BonusNames,fileName)
+	end
+end
+
 function addObjects(levelScript,sectn,yoff,xoff)
 	local bounds = sectn.boundary
 	times = times+30
