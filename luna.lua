@@ -7,6 +7,7 @@ levelMaker = require("levelMaker")
 levels = require("levels")
 generateLevel = false
 local musFake = false
+local setup = false
 local musReal = false
 local playing = -1
 local musSect = 0
@@ -24,9 +25,6 @@ GameData.wonPlayer = -1
 local wonPlayer = player
 -- Run code on the first frame
 function onStart()
-    levelMaker:onStartMake()
-    levels:loadLevels()
-    levels:generate()
     Defines.player_grabSideEnabled = false
     Defines.player_grabTopEnabled = false
     Defines.player_grabShellEnabled = false
@@ -104,7 +102,21 @@ end
 -- Run code every frame (~1/65 second)
 -- (code will be executed before game logic will be processed)
 function onTick()
+    if setup == false then
+        levelMaker:onStartMake()
+        levels:loadLevels()
+        levels:generate()
+        setup = true
+    end
     levels:tick()
+    for i=1,tablelength(NPC.get(178)) do
+        if player ~= nil then
+            if player.x > NPC.get(178)[i].x then player.x = NPC.get(178)[i].x end
+        end
+        if player2 ~= nil then
+            if player2.x > NPC.get(178)[i].x then player2.x = NPC.get(178)[i].x end
+        end
+    end
     Progress.value = SaveData.totalWins
     for i=1,tablelength(NPC.get()) do
         if NPC.get()[i]:mem(0x138,FIELD_WORD) == 1 then
@@ -138,7 +150,7 @@ function onTick()
     end
     hudoverride.visible.itembox = false
     if generateLevel == true then
-        levelMaker:onTickMake(false)
+        levelMaker.onTickMake(false)
         generateLevel = false
     end
     endTimer = endTimer-1

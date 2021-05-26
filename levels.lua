@@ -4,7 +4,15 @@ local PowerNames = {}
 local MainNames = {}
 levelMaker = require("levelMaker")
 local EndNames = {}
-local BonusNames = {}
+
+local BonusNames = {
+"bonus1",
+"bonus2",
+"bonus3",
+"bonus4",
+"bonus5",
+}
+
 local StartGrassNames = {
 "start1",
 "start2",
@@ -29,10 +37,6 @@ local MainGrassNames = {
 local EndGrassNames = {
 "end1",
 "end2",
-}
-local BonusGrassNames = {
-"bonus1",
-"bonus2",
 }
 
 local StartCastleNames = {
@@ -60,8 +64,6 @@ local EndCastleNames = {
 "endCastle1",
 "endCastle2",
 }
-local BonusCastleNames = {
-}
 
 local StartWaterNames = {
 "startWater1",
@@ -87,8 +89,6 @@ local MainWaterNames = {
 local EndWaterNames = {
 "endWater1",
 "endWater2",
-}
-local BonusWaterNames = {
 }
 
 local StartUndergroundNames = {
@@ -116,10 +116,6 @@ local EndUndergroundNames = {
 "endGround1",
 "endGround2",
 }
-local BonusUndergroundNames = {
-"bonus1",
-"bonus2",
-}
 
 local StartIslandNames = {
 "startIsland1",
@@ -145,8 +141,6 @@ local MainIslandNames = {
 local EndIslandNames = {
 "endIsland1",
 "endIsland2",
-}
-local BonusIslandNames = {
 }
 
 possibleStarts = {}
@@ -260,6 +254,10 @@ function genRoom()
 							local levelScript = possiblePowers[chose]
 							local sec = Section(0)
 							sec.boundary = addObjects(levelScript,sec,0,0)
+							table.remove(possiblePowers,chose)
+							if tablelength(possiblePowers) <= 0 then
+								makePowerTable()
+							end
 				end
 				powersPlaced = powersPlaced+1
 				length = length-1
@@ -312,7 +310,7 @@ function genRoom()
 				for p=1,50 do
 						chose = RNG.randomInt(1,tablelength(Block.get(196)))
 						blockChose = Block.get(196)[chose]
-						if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
+						if Section.getFromCoords(blockChose.x, blockChose.y, 32, 32)[1]==Section(0) then break end
 				end
 				local warp = Warp.get()[1]
 				local startChose = chose
@@ -334,8 +332,16 @@ function genRoom()
 					sec.isUnderwater = levelScript.water
 				end
 				sec.boundary = addObjects(levelScript,sec,20000,20000)
-				warp.exitX = levelScript.playerX+20000
-				warp.exitY = levelScript.playerY-32+(20000)
+				local chose = RNG.randomInt(1,tablelength(Block.get(1076)))
+				local blockChose = Block.get(1076)[chose]
+				for p=1,50 do
+						chose = chose+1
+						if chose > tablelength(Block.get(1076)) then chose = 1 end
+						blockChose = Block.get(1076)[chose]
+						if Section.getFromCoords(blockChose.x, blockChose.y, 32, 32)[1]==Section(1) then break end
+				end
+				warp.exitX = blockChose.x+16--+20000
+				warp.exitY = blockChose.y+32--+(20000)
 				chose = 1
 				if tablelength(Block.get(376)) > 0 then
 					blockChose = Block.get(376)[chose]
@@ -343,7 +349,7 @@ function genRoom()
 						chose = chose+1
 						if chose > tablelength(Block.get(376)) then chose = 1 end
 						blockChose = Block.get(376)[chose]
-						if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(1)) then break end
+						if Section.getFromCoords(blockChose.x, blockChose.y, 32, 32)[1]==Section(1) then break end
 					end
 					warp = Warp.get()[2]
 					warp.entranceX = blockChose.x-32
@@ -354,7 +360,7 @@ function genRoom()
 						chose = chose+1
 						if chose > tablelength(Block.get(196)) then chose = 1 end
 						blockChose = Block.get(196)[chose]
-						if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
+						if Section.getFromCoords(blockChose.x, blockChose.y, 32, 32)[1]==Section(0) then break end
 					end
 					warp.exitX = blockChose.x+16
 					warp.exitY = blockChose.y-32
@@ -366,7 +372,7 @@ function genRoom()
 				for p=1,50 do
 						chose = RNG.randomInt(1,tablelength(Block.get(196)))
 						blockChose = Block.get(196)[chose]
-						if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
+						if Section.getFromCoords(blockChose.x, blockChose.y, 32, 32)[1]==Section(0) then break end
 				end
 				local startChose = chose
 				local warp = Warp.get()[3]
@@ -385,8 +391,16 @@ function genRoom()
 				sec.backgroundID = levelScript.background
 				sec.musicID = levelScript.music
 				sec.boundary = addObjects(levelScript,sec,40000,40000)
-				warp.exitX = levelScript.playerX+40000
-				warp.exitY = levelScript.playerY-32+(40000)
+				local chose = RNG.randomInt(1,tablelength(Block.get(1076)))
+				local blockChose = Block.get(1076)[chose]
+				for p=1,50 do
+						chose = chose+1
+						if chose > tablelength(Block.get(1076)) then chose = 1 end
+						blockChose = Block.get(1076)[chose]
+						if Section.getFromCoords(blockChose.x, blockChose.y, 32, 32)[1]==Section(2) then break end
+				end
+				warp.exitX = blockChose.x+16--+20000
+				warp.exitY = blockChose.y+32--+(20000)
 				chose = 1
 				if tablelength(Block.get(376)) > 1 then
 					blockChose = Block.get(376)[chose]
@@ -394,7 +408,7 @@ function genRoom()
 						chose = chose+1
 						if chose > tablelength(Block.get(376)) then chose = 1 end
 						blockChose = Block.get(376)[chose]
-						if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(2)) then break end
+						if Section.getFromCoords(blockChose.x, blockChose.y, 32, 32)[1]==Section(2) then break end
 					end
 					warp = Warp.get()[4]
 					warp.entranceX = blockChose.x-32+20000
@@ -405,7 +419,7 @@ function genRoom()
 						chose = chose+1
 						if chose > tablelength(Block.get(196)) then chose = 1 end
 						blockChose = Block.get(196)[chose]
-						if table.contains(Section.getFromCoords(blockChose.x, blockChose.y, 32, 32),Section(0)) then break end
+						if Section.getFromCoords(blockChose.x, blockChose.y, 32, 32)[1]==Section(0) then break end
 					end
 					warp.exitX = blockChose.x+16
 					warp.exitY = blockChose.y-32
@@ -458,7 +472,7 @@ function genRoom()
 				end
 			end
 			Timer.activate(500)
-			levelMaker:onTickMake(true)
+			levelMaker.onTickMake(true)
 end
 
 function levels.generate()
@@ -520,29 +534,26 @@ function levels.loadLevels()
 	if chosenBiome == "grass" then MainNames = MainGrassNames end
 	if chosenBiome == "grass" then PowerNames = PowerGrassNames end
 	if chosenBiome == "grass" then EndNames = EndGrassNames end
-	if chosenBiome == "grass" then BonusNames = BonusGrassNames end
+
 	if chosenBiome == "castle" then StartNames = StartCastleNames end
 	if chosenBiome == "castle" then MainNames = MainCastleNames end
 	if chosenBiome == "castle" then PowerNames = PowerCastleNames end
 	if chosenBiome == "castle" then EndNames = EndCastleNames end
-	if chosenBiome == "castle" then BonusNames = BonusCastleNames end
+
 	if chosenBiome == "water" then StartNames = StartWaterNames end
 	if chosenBiome == "water" then MainNames = MainWaterNames end
 	if chosenBiome == "water" then PowerNames = PowerWaterNames end
 	if chosenBiome == "water" then EndNames = EndWaterNames end
-	if chosenBiome == "water" then BonusNames = BonusWaterNames end
 
 	if chosenBiome == "underground" then StartNames = StartUndergroundNames end
 	if chosenBiome == "underground" then MainNames = MainUndergroundNames end
 	if chosenBiome == "underground" then PowerNames = PowerUndergroundNames end
 	if chosenBiome == "underground" then EndNames = EndUndergroundNames end
-	if chosenBiome == "underground" then BonusNames = BonusUndergroundNames end
 
 	if chosenBiome == "island" then StartNames = StartIslandNames end
 	if chosenBiome == "island" then MainNames = MainIslandNames end
 	if chosenBiome == "island" then PowerNames = PowerIslandNames end
 	if chosenBiome == "island" then EndNames = EndIslandNames end
-	if chosenBiome == "island" then BonusNames = BonusIslandNames end
 	makeStartTable()
 	makePowerTable()
 	makeMainTable()

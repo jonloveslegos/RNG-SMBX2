@@ -9,7 +9,7 @@ function levelMaker.onStartMake()
     playerStartY = player.y
     playerStartX = player.x
 end
-function levelMaker.onTickMake(returns)
+function levelMaker.onTickMake(retrns)
     savedCode = {}
     local savedNPC = {}
     local savedBGO = {}
@@ -60,11 +60,11 @@ function levelMaker.onTickMake(returns)
         table.insert(tosave,saving[i].exitY)
         table.insert(savedWARP,tosave)
     end
-    if returns == false then
+    if (retrns == false) then
         local dataFile = io.open(Misc.episodePath()..Level.name()..".txt", "w+" )
         dataFile:write(Level.name().." = {}".."\n".."\n"..Level.name()..".water = "..createStringFromBool(Section.get(1).isUnderwater).."\n"..Level.name()..".width = "..math.abs(Section.get(1).boundary.left-Section.get(1).boundary.right).."\n"..Level.name()..".playerY = "..playerStartY.."\n"..Level.name()..".playerX = "..playerStartX.."\n"..Level.name()..".background = "..Section.get(1).backgroundID.."\n"..Level.name()..".music = "..Section.get(1).musicID.."\n"..Level.name()..".warp = {\n"..createStringFromTable(savedWARP).."}".."\n"..Level.name()..".bgo = {\n"..createStringFromTable(savedBGO).."}".."\n"..Level.name()..".npc = {\n"..createStringFromTable(savedNPC).."}".."\n"..Level.name()..".blocks = {\n"..createStringFromTable(savedCode).."}\nreturn "..Level.name())
         dataFile:close()
-    else
+    elseif Misc.saveSlot() ~= 0 then
         playerStartX = player.x
         playerStartY = player.y
         local scene1back = Section(1).backgroundID
