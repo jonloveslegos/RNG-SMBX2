@@ -4,7 +4,25 @@ local PowerNames = {}
 local MainNames = {}
 levelMaker = require("levelMaker")
 local EndNames = {}
+levels.grassLength = 8
+levels.startingTime = 500
+levels.maxLevelCountPerWorld = 4
+levels.undergroundLength = 8
+levels.waterLength = 8
+levels.islandLength = 5
+levels.castleLength = 5
 
+levels.grassMaxPowers = 3
+levels.undergroundMaxPowers = 3
+levels.waterMaxPowers = 1
+levels.islandMaxPowers = 2
+levels.castleMaxPowers = 2
+
+levels.grassMinPowers = 1
+levels.undergroundMinPowers = 2
+levels.waterMinPowers = 0
+levels.islandMinPowers = 1
+levels.castleMinPowers = 1
 local BonusNames = {
 "bonus1",
 "bonus2",
@@ -270,20 +288,18 @@ function genRoom()
 				sec.boundary = addObjects(levelScript,sec,0,0)
 			end
 			local powerus = 0
-			if chosenBiome == "castle" then powerus = RNG.randomInt(1,2) end
-			if chosenBiome == "underground" then powerus = RNG.randomInt(2,3) end
-			if chosenBiome == "bridge" then powerus = RNG.randomInt(1,2) end
-			if chosenBiome == "island" then powerus = RNG.randomInt(1,2) end
-			if chosenBiome == "water" then powerus = RNG.randomInt(0,1); end
-			if chosenBiome == "grass" then powerus = RNG.randomInt(1,3); end
+			if chosenBiome == "castle" then powerus = RNG.randomInt(levels.castleMinPowers,levels.castleMinPowers) end
+			if chosenBiome == "underground" then powerus = RNG.randomInt(levels.undergroundMinPowers,levels.undergroundMaxPowers) end
+			if chosenBiome == "island" then powerus = RNG.randomInt(levels.islandMinPowers,levels.islandMaxPowers) end
+			if chosenBiome == "water" then powerus = RNG.randomInt(levels.waterMinPowers,levels.waterMaxPowers); end
+			if chosenBiome == "grass" then powerus = RNG.randomInt(levels.grassMinPowers,levels.grassMaxPowers); end
 			local powersPlaced = 0
 			local length = 8
-			if chosenBiome == "castle" then length = 5 end
-			if chosenBiome == "island" then length = 5 end
-			if chosenBiome == "underground" then length = 8 end
-			if chosenBiome == "bridge" then length = 8 end
-			if chosenBiome == "water" then length = 8 end
-			if chosenBiome == "grass" then length = 8 end
+			if chosenBiome == "castle" then length = levels.castleLength end
+			if chosenBiome == "island" then length = levels.islandLength end
+			if chosenBiome == "underground" then length = levels.undergroundLength end
+			if chosenBiome == "water" then length = levels.waterLength end
+			if chosenBiome == "grass" then length = levels.grassLength end
 			if powerus > 0 then
 				local chose = RNG.randomInt(1,tablelength(possiblePowers))
 				if tablelength(possiblePowers) > 0 then
@@ -507,7 +523,7 @@ function genRoom()
 					blcks[chose].contentID = 1186
 				end
 			end
-			Timer.activate(500)
+			Timer.activate(levels.startingTime)
 			levelMaker.onTickMake(true)
 end
 
@@ -547,7 +563,7 @@ function levels.generate()
 					Warp.get()[i].exitX = levelScript.warp[i][4]
 					Warp.get()[i].exitY = levelScript.warp[i][5]
 				end
-				Timer.activate(500)
+				Timer.activate(levels.startingTime)
 			else
 				genRoom()
 			end
@@ -558,14 +574,17 @@ function levels.generate()
 end
 
 function levels.loadLevels()
-	if SaveData.levelCounter == 1 or SaveData.levelCounter == 3 then chosenBiome = "grass" end
-	if SaveData.levelCounter == 4 then chosenBiome = "castle" end
-	if SaveData.levelCounter == 2 then 
+	local lvlCounter = SaveData.levelCounter
+	for i=1,100 do
+		if lvlCounter > 4 then lvlCounter = lvlCounter-4 end
+		if lvlCounter <= 4 then break end
+	end
+	if lvlCounter == 1 then chosenBiome = "grass" end
+	if lvlCounter == 2 then 
 		if SaveData.worldCounter/2 ~= math.floor(SaveData.worldCounter/2) then chosenBiome = "underground" else chosenBiome = "water" end
 	end
-	if SaveData.levelCounter == 3 then 
-		if SaveData.worldCounter/2 ~= math.floor(SaveData.worldCounter/2) then chosenBiome = "island" else chosenBiome = "island" end
-	end
+	if lvlCounter == 3 then chosenBiome = "island" end
+	if lvlCounter == 4 or SaveData.levelCounter >= levels.maxLevelCountPerWorld then chosenBiome = "castle" end
 	if chosenBiome == "grass" then StartNames = StartGrassNames end
 	if chosenBiome == "grass" then MainNames = MainGrassNames end
 	if chosenBiome == "grass" then PowerNames = PowerGrassNames end

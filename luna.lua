@@ -5,7 +5,7 @@
 local hudoverride = require("hudoverride")
 levelMaker = require("levelMaker")
 levels = require("levels")
-config = require("CONFIG")
+local config = require("CONFIG")
 generateLevel = false
 local musFake = false
 local setup = false
@@ -26,9 +26,11 @@ GameData.wonPlayer = -1
 local wonPlayer = player
 -- Run code on the first frame
 function onStart()
-    Defines.player_grabSideEnabled = false
-    Defines.player_grabTopEnabled = false
-    Defines.player_grabShellEnabled = false
+    if config.canGrab == false then
+        Defines.player_grabSideEnabled = false
+        Defines.player_grabTopEnabled = false
+        Defines.player_grabShellEnabled = false
+    end
 end
 function onInputUpdate()
     if endTimer > -100 then
@@ -104,6 +106,23 @@ end
 -- (code will be executed before game logic will be processed)
 function onTick()
     if setup == false then
+        levels.grassLength = config.grassLength
+        levels.undergroundLength = config.undergroundLength
+        levels.waterLength = config.waterLength
+        levels.islandLength = config.islandLength
+        levels.castleLength = config.castleLength
+        levels.grassMaxPowers = config.grassMaxPowers
+        levels.undergroundMaxPowers = config.undergroundMaxPowers
+        levels.waterMaxPowers = config.waterMaxPowers
+        levels.islandMaxPowers = config.islandMaxPowers
+        levels.castleMaxPowers = config.castleMaxPowers
+        levels.grassMinPowers = config.grassMinPowers
+        levels.undergroundMinPowers = config.undergroundMinPowers
+        levels.waterMinPowers = config.waterMinPowers
+        levels.islandMinPowers = config.islandMinPowers
+        levels.castleMinPowers = config.castleMinPowers
+        levels.maxLevelCountPerWorld = config.maxLevelCountPerWorld
+        levels.startingTime = config.startingTime
         config:addLevels()
         levelMaker:onStartMake()
         levels:loadLevels()
@@ -120,9 +139,11 @@ function onTick()
         end
     end
     Progress.value = SaveData.totalWins
-    for i=1,tablelength(NPC.get()) do
-        if NPC.get()[i]:mem(0x138,FIELD_WORD) == 1 then
-            NPC.get()[i].direction = 1
+    if config.powersFromBlocksAlwaysMoveRight == true then
+        for i=1,tablelength(NPC.get()) do
+            if NPC.get()[i]:mem(0x138,FIELD_WORD) == 1 then
+                NPC.get()[i].direction = 1
+            end
         end
     end
     if GameData.wonPlayer ~= -1 then 
@@ -140,24 +161,33 @@ function onTick()
 				end
 		end
     end
-    if player.mount == MOUNT_NONE then
-        player:mem(0x120,FIELD_BOOL,false)
-    end
-    player.reservePowerup = 0
-    if player2 ~= nil then
-        if player2.mount == MOUNT_NONE then
-            player2:mem(0x120,FIELD_BOOL,false)
+    if config.disableSpinJump == true then
+        if player.mount == MOUNT_NONE then
+            player:mem(0x120,FIELD_BOOL,false)
         end
-        player2.reservePowerup = 0
+        if player2 ~= nil then
+            if player2.mount == MOUNT_NONE then
+                player2:mem(0x120,FIELD_BOOL,false)
+            end
+        end
     end
-    hudoverride.visible.itembox = false
+    if config.disableItemBox == true then
+        player.reservePowerup = 0
+        if player2 ~= nil then
+            if player2.mount == MOUNT_NONE then
+                player2:mem(0x120,FIELD_BOOL,false)
+            end
+            player2.reservePowerup = 0
+        end
+        hudoverride.visible.itembox = false
+    end
     if generateLevel == true then
-        levelMaker.onTickMake(false)
-        generateLevel = false
+            levelMaker.onTickMake(false)
+            generateLevel = false
     end
     endTimer = endTimer-1
     if endTimer <= 0 and endTimer > -100 then 
-        if SaveData.worldCounter >= 8 then
+        if SaveData.worldCounter >= config.maxWorldCount then
             SaveData.worldCounter = 1
             SaveData.levelCounter = 1
             SaveData.totalWins=SaveData.totalWins+1
@@ -186,12 +216,12 @@ function onTick()
     for i=1,tablelength(npcs) do
         if npcs[i].id == 200 then
             if npcs[i].x < player.x+camera.width then
-                if SaveData.worldCounter >= 8 and musReal == false then
+                if SaveData.worldCounter >= config.maxWorldCount and musReal == false then
                     Audio.MusicChange(player.section, 0)
                     playing = SFX.play("RealStart.mp3",0.4)
                     musSect = player.section
                     musReal = true
-                elseif SaveData.worldCounter < 8 and musFake == false then
+                elseif SaveData.worldCounter < config.maxWorldCount and musFake == false then
                     Audio.MusicChange(player.section, 0)
                     playing = SFX.play("FakeStart.mp3",0.4)
                     musSect = player.section
@@ -200,12 +230,12 @@ function onTick()
                 break
             elseif camera2 ~= nil and player2 ~= nil then
                 if npcs[i].x < player2.x+camera2.width then
-                    if SaveData.worldCounter >= 8 and musReal == false then
+                    if SaveData.worldCounter >= config.maxWorldCount and musReal == false then
                         Audio.MusicChange(player2.section, 0)
                         playing = SFX.play("RealStart.mp3",0.4)
                         musSect = player2.section
                         musReal = true
-                    elseif SaveData.worldCounter < 8 and musFake == false then
+                    elseif SaveData.worldCounter < config.maxWorldCount and musFake == false then
                         Audio.MusicChange(player2.section, 0)
                         playing = SFX.play("FakeStart.mp3",0.4)
                         musSect = player2.section
@@ -216,12 +246,12 @@ function onTick()
             end
         end
     end
-    if tablelength(NPC.get(200)) > 0 and SaveData.worldCounter < 6 then
+    if tablelength(NPC.get(200)) > 0 and SaveData.worldCounter < (config.maxWorldCount/2)+2 then
         for i=1,tablelength(NPC.get(200)) do
             NPC.get(200)[i].ai4 = 100000
         end
     end
-    if tablelength(NPC.get(200)) > 0 and SaveData.worldCounter >= 6 and SaveData.worldCounter < 8 then
+    if tablelength(NPC.get(200)) > 0 and SaveData.worldCounter >= (config.maxWorldCount/2)+2 and SaveData.worldCounter < config.maxWorldCount then
         for i=1,tablelength(NPC.get(200)) do
             NPC.get(200)[i].ai1 = 0
             NPC.get(200)[i].ai3 = 60
@@ -230,7 +260,7 @@ function onTick()
     if tablelength(Animation.get(105)) > 0 then
         for i=1,tablelength(Animation.get(105)) do
             local anim = Animation.get(105)[i]
-            if SaveData.worldCounter < 8 then
+            if SaveData.worldCounter < config.maxWorldCount then
                 anim.id = 53
                 anim.width = 32
                 anim.height = 32
@@ -248,7 +278,7 @@ function onExitLevel(win)
     if win > 0 then 
         SaveData.levelCounter = SaveData.levelCounter+1
         GameData.playerWon = true
-        if SaveData.levelCounter > 4 then 
+        if SaveData.levelCounter > config.maxLevelCountPerWorld then 
             SaveData.levelCounter = 1 
             SaveData.worldCounter = SaveData.worldCounter+1 
         end
@@ -264,7 +294,7 @@ function onNPCKill(eventToken,killedNPC,harmType)
 		Audio.SeizeStream(-1);
         GameData.playerWon = true
         wonPlayer = Player.getIntersecting(killedNPC.x,killedNPC.y,killedNPC.x+killedNPC.width,killedNPC.y+killedNPC.height)[1]
-        if SaveData.worldCounter < 8 then
+        if SaveData.worldCounter < config.maxWorldCount then
             SFX.play("110 World Clear.mp3")
             if music ~= nil then music:stop() end
             endTimer = 590
